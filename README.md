@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Real Estate Django Web App
 
 A real estate listings website built with `python` `django` `bootstrap`.
@@ -135,3 +136,6 @@ Many thanks to [@bradtraversy](https://github.com/bradtraversy) for his awesome 
 
 1. https://www.traversymedia.com/
 2. https://www.djangoproject.com/
+=======
+# empyreal-project
+>>>>>>> bd70205f8428cd712ff6fb58611725eec236853f
