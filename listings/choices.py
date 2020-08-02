@@ -12,40 +12,33 @@ bedroom_choices = {
   }
 
 price_choices = {
-  '100000':'$100,000',
-  '200000':'$200,000',
-  '300000':'$300,000',
-  '400000':'$400,000',
-  '500000':'$500,000',
-  '600000':'$600,000',
-  '700000':'$700,000',
-  '800000':'$800,000',
-  '900000':'$900,000',
-  '1000000':'$1M+',
+  '1000000':'LKR 1,000,000',
+  '2000000':'LKR 2,000,000',
+  '3000000':'LKR 3,000,000',
+  '4000000':'LKR 4,000,000',
+  '5000000':'LKR 5,000,000',
+  '6000000':'LKR 6,000,000',
+  '7000000':'LKR 7,000,000',
+  '8000000':'LKR 8,000,000',
+  '9000000':'LKR 9,000,000',
+  '10000000':'LKR 1OM+',
 }
 
 state_choices = {
-        
-       'AP': 'Andra Pradesh',
-       'HYD' : 'Hyderabad' ,
-       'AP' : 'Arunachal Pradesh',
-       'AS':'Assam',
-       'BH':'Bihar',
-       'P':'Patna',
-       'CHG':'Chhattisgarh',
-       'Rp':'Raipur',
-       'G': 'Goa',
-       'GU':'Gujarat',
-       'H': 'Haryana',
-       'HP': 'Himachal Pradesh',
-       'JAK'  : 'Jammu and Kashmir',
-       'JK': 'Jharkhand',
-       'RCH': 'Ranchi',
-       'KR': 'Karnataka',
-       'KRL' : 'Kerala',
-       'MP' : 'Madya Pradesh',
-       'BP' :  'Bhopal',
-       'MP':'Maharashtra',
-       'OD' :  'Orissa'
-       
+
+       'CO': 'Colombo',
+       'KL' : 'Kalutara' ,
+       'GA' : 'Gampaha',
+       'GL':'Galle',
+       'MA':'Matara',
+       'KA':'Kandy',
+       'RA':'Rathnapura',
+       'KE':'Kegalle',
+       'BA': 'Badulla',
+       'NU':'Nuwaraeliya',
+       'KU': 'Kurunagala',
+       'HA': 'Hambantota',
+       'OT'  : 'Other',
+
+
 }
