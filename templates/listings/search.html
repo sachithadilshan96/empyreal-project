@@ -27,7 +27,7 @@
                 <select name="state" class="form-control">
                   <option selected="true" disabled="disabled">State (All)</option>
                   {% for key,value in state_choices.items %}
-                      <option value="{{ key }}" 
+                      <option value="{{ key }}"
                       {% if key == values.state %}
                         selected
                       {% endif %}
@@ -100,7 +100,7 @@
                 <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="">
                 <div class="card-img-overlay">
                   <h2>
-                    <span class="badge badge-secondary text-white">${{ listing.price | intcomma }}</span>
+                    <span class="badge badge-secondary text-white">LKR {{ listing.price | intcomma }}</span>
                   </h2>
                 </div>
                 <div class="card-body">
@@ -132,7 +132,7 @@
                       <i class="fas fa-clock"></i> {{ listing.list_date | timesince }}</div>
                   </div>
                   <hr>
-                  <a href="{% url 'listing' listing.id %}" class="btn btn-primary btn-block">More Info</a>
+                  <a href="{% url 'listing' listing.id %}" class="btn btn-secondary btn-block mt-4">More Info</a>
                 </div>
               </div>
             </div>
