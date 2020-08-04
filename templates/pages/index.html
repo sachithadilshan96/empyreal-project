@@ -6,14 +6,17 @@
 
 {% block content %}
 <!-- Showcase -->
-<section id="showcase">
-    <div class="container text-center">
+<header class="mastheadx">
+
+
+<section>
+    <div class="container text-center " >
       <div class="home-search p-5">
         <div class="overlay p-5">
-          <h1 class="display-4 mb-4">
+          <h1 class="display-4 mb-4 "style="color:white" ;>
              Home has never been more important
           </h1>
-          <p class="lead">Emyreal,How Real Estate Gets Real</p>
+          <p class="lead">Empyreal</p>
           <div class="search">
             <form action="{% url 'search' %}">
               <!-- Form Row 1 -->
@@ -65,7 +68,8 @@
       </div>
     </div>
   </section>
-<br>
+  </header>
+
   <!-- Alerts -->
   {% include 'partials/_alerts.html' %}
 

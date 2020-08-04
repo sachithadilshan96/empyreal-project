@@ -4,7 +4,7 @@
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
       <div class="container">
         <a class="navbar-brand" href="{% url 'index' %}">
-          <img src="{% static 'img/empyreal.png' %}" class="logo" alt="">
+          <img src="{% static 'img/logo_emp.png' %}"  class="logo" >
         </a>
           <a class="navbar-brand js-scroll-trigger" href="{% url 'index' %}">Empyreal</a>
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -17,7 +17,7 @@
                     class="nav-item mr-3"
                   {% endif %}
                 >
-                  <a class="nav-link" href="{% url 'index' %}">Home</a>
+                  <a class="nav-link" href="{% url 'index' %}">Advertise</a>
                 </li>
                 <li
                   {% if 'about' in request.path %}
@@ -26,7 +26,7 @@
                     class="nav-item mr-3"
                   {% endif %}
                 >
-                  <a class="nav-link" href="{% url 'about' %}">About</a>
+                  <a class="nav-link" href="{% url 'about' %}">Mortgage</a>
                 </li>
                 <li
                   {% if 'listings' in request.path %}
@@ -36,6 +36,15 @@
                   {% endif %}
                 >
                   <a class="nav-link" href="{% url 'listings' %}">Featured Listings</a>
+                </li>
+                <li
+                  {% if 'about' in request.path %}
+                    class="nav-item active mr-3"
+                  {% else %}
+                    class="nav-item mr-3"
+                  {% endif %}
+                >
+                  <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
               </ul>
               <ul class="navbar-nav ml-auto">
@@ -48,7 +57,8 @@
                   {% endif %}
                   >
                     <a class="nav-link" href="{% url 'dashboard' %}">
-                     Welcome {{ user.username }} </a>
+                      <i class="far fa-user"></i>
+                     {{ user.username }} </a>
                   </li>
                   <li class="nav-item mr-3">
                     <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
