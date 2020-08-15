@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} | {{ listing.title }} {% endblock %}
+
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <br>
+          <br>
+          <br>
+          <br>
+          <hr>
+          <h1 class="display-4">Advertise with us</h1>
+          <p class="lead">Empyreal is the best palce to sell your property</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> Advertise</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+
+  <div class="row justify-content-center mt-5">
+
+      <div class="col-md-5">
+          {% if error %}
+              <div class="alert alert-danger" role="alert">
+                  {{ error }}
+              </div>
+          {% endif %}
+          <h3>Create your advertisement</h3>
+          <br>
+
+<form method="post" action="">
+
+  {% csrf_token %}
+
+  {{ form.non_field_errors }}
+
+    {% for hidden_field in form.hidden_fields %}
+      {{ hidden_field.errors }}
+      {{ hidden_field }}
+    {% endfor %}
+
+    <table border="0" class="table table-bordered table-dark">
+      {% for field in form.visible_fields %}
+        <tr>
+          <th>{{ field.label_tag }}</th>
+          <td>
+            {{ field.errors }}
+            {{ field }}
+            {{ field.help_text }}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+<button type="submit"class="btn btn-primary button" > Create </button>
+</form>
+</div>
+</div>
+
+
+{% endblock %}
