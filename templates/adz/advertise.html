@@ -1,34 +1,35 @@
 {% extends 'base.html' %}
 
 {% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block title %} | {{ listing.title }} {% endblock %}
 
 
 {% block content %}
 <section id="showcase-inner" class="py-5 text-white">
-    <div class="container">
-      <div class="row text-center">
-        <div class="col-md-12">
-          <br>
-          <br>
-          <br>
-          <br>
-          <hr>
-          <h1 class="display-4">Advertise with us</h1>
-          <p class="lead">Empyreal is the best palce to sell your property</p>
-        </div>
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <h1 class="display-4">Advertise with us</h1>
+        <p class="lead">Empyreal is the best palce to sell your property</p>
       </div>
     </div>
-  </section>
-  <!-- Breadcrumb -->
-  <section id="bc" class="mt-3">
-    <div class="container">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{% url 'index' %}">
-              <i class="fas fa-home"></i> Home</a>
+  </div>
+</section>
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'index' %}">
+            <i class="fas fa-home"></i> Home</a>
           </li>
           <li class="breadcrumb-item active"> Advertise</li>
         </ol>
@@ -39,43 +40,81 @@
 
   <div class="row justify-content-center mt-5">
 
-      <div class="col-md-5">
-          {% if error %}
-              <div class="alert alert-danger" role="alert">
-                  {{ error }}
-              </div>
-          {% endif %}
-          <h3>Create your advertisement</h3>
-          <br>
+    <div class="col-md-5">
+      {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+      {% endif %}
+      <h3>Create your advertisement</h3>
+      <br>
+      <form method="post" action="" enctype="multipart/form-data">
 
-<form method="post" action="">
+        {% csrf_token %}
 
-  {% csrf_token %}
+        {{ form.realtor|as_crispy_field }}
+        {{ form.title|as_crispy_field }}
+        {{ form.address|as_crispy_field }}
+        <div class="row">
+          <div class="col-6">
+            {{ form.city|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.state|as_crispy_field }}
+          </div>
+        </div>
 
-  {{ form.non_field_errors }}
+        {{ form.zipcode|as_crispy_field }}
 
-    {% for hidden_field in form.hidden_fields %}
-      {{ hidden_field.errors }}
-      {{ hidden_field }}
-    {% endfor %}
+        {{ form.description|as_crispy_field }}
+        {{ form.price|as_crispy_field }}
+        <div class="row">
+          <div class="col-6">
+            {{ form.bedrooms|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.bathrooms|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.garage|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            {{ form.sqft|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.lot_size|as_crispy_field }}
+          </div>
+        </div>
+        {{ form.photo_main|as_crispy_field }}
+        <div class="row">
+          <div class="col-6">
+            {{ form.photo_1|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.photo_2|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.photo_3|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.photo_4|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.photo_5|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.photo_6|as_crispy_field }}
+          </div>
+        </div>
 
-    <table border="0" class="table table-bordered table-dark">
-      {% for field in form.visible_fields %}
-        <tr>
-          <th>{{ field.label_tag }}</th>
-          <td>
-            {{ field.errors }}
-            {{ field }}
-            {{ field.help_text }}
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-
-<button type="submit"class="btn btn-primary button" > Create </button>
-</form>
-</div>
-</div>
 
 
-{% endblock %}
+        <button type="submit" class="btn btn-primary button" value="save" > Create </button>
+      </form>
+    </div>
+  </div>
+
+
+  {% endblock %}
