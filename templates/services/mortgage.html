@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %} | Mortgage {% endblock %}
+
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <h1 class="display-4">Service Listing</h1>
+        <p class="lead">Mortgage</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'index' %}">
+            <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'services' %}">
+               Services</a>
+            </li>
+          <li class="breadcrumb-item active"> Mortgage</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+
+
+
+  <div class="row justify-content-center mt-5 ">
+
+    <div class="col-md-5">
+      {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+      {% endif %}
+      <h3>Create your advertisement</h3>
+      <br>
+      <form method="post" action="" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+
+        {{ form.title|as_crispy_field }}
+        {{ form.address|as_crispy_field }}
+        <div class="row">
+          <div class="col-6">
+            {{ form.city|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.state|as_crispy_field }}
+          </div>
+        </div>
+
+        {{ form.zipcode|as_crispy_field }}
+        <div class="row">
+          <div class="col-6">
+            {{ form.maximum_loan_amount|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.interest_rate|as_crispy_field }}
+          </div>
+        </div>
+
+        {{ form.description|as_crispy_field }}
+
+
+
+        {{ form.photo_main|as_crispy_field }}
+
+
+
+
+        <button type="submit" class="btn btn-primary button" value="save" > Create </button>
+      </form>
+    </div>
+  </div>
+
+
+
+  {% endblock %}
