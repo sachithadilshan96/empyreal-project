@@ -120,3 +120,32 @@ h1.tagline{
   position: relative;
   overflow: hidden;
   min-height: 200px; }
+
+h4.slogan{
+  font-family: 'Kanit', sans-serif;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: 200;
+  letter-spacing: 1.5px;
+}
+h1.slogan{
+  font-family: 'Kanit', sans-serif;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: 400;
+  font-size: 42px;
+  color: #fff;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+
+section.background{
+  background-color:#FAFAFA;
+}
