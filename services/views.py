@@ -45,6 +45,20 @@ def index(request):
 
   return render(request, 'services/mortgagelist.html', context)
 
+def index_2(request):
+  legals= Legal.objects.order_by('zipcode')
+
+  paginator = Paginator(legals, 3)
+  page = request.GET.get('page')
+  paged_legals = paginator.get_page(page)
+
+  context = {
+    'legals': paged_legals
+  }
+
+  return render(request, 'services/legallist.html', context)
+
+
 
 def mortgages(request, mortgage_id):
    mortgagepage = get_object_or_404(Mortgage, pk=mortgage_id)
@@ -54,3 +68,13 @@ def mortgages(request, mortgage_id):
    }
 
    return render(request, 'services/listedmortgage.html', context)
+
+
+def legals(request, legal_id):
+   legalpage = get_object_or_404(Legal, pk=legal_id)
+
+   context = {
+     'legalpage': legalpage
+   }
+
+   return render(request, 'services/listedlegal.html', context)
