@@ -60,6 +60,7 @@
 
 
         {{ form.title|as_crispy_field }}
+        {{ form.company|as_crispy_field }}
         {{ form.address|as_crispy_field }}
         <div class="row">
           <div class="col-6">
@@ -81,9 +82,7 @@
         </div>
 
         {{ form.description|as_crispy_field }}
-
-
-
+        {{ form.contact_number|as_crispy_field }}
         {{ form.photo_main|as_crispy_field }}
 
 

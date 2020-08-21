@@ -48,6 +48,9 @@
                 <div class="card-img-overlay">
                   <h2>
                     <span class="badge badge-secondary text-white">LKR {{ listing.price | intcomma }}</span>
+                    {% if listing.is_verified == True %}
+                    <span class="badge badge-secondary text-white">Verified</span>
+                    {% endif %}
                   </h2>
                 </div>
                 <div class="card-body">

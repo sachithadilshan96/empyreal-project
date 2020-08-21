@@ -5,6 +5,10 @@ from . import views
 urlpatterns = [
     path('', views.services, name='services'),
     path('mortgage', views.mortgage, name='mortgage'),
+    path('mortgagelist', views.index, name='mortgages'),
+    path('mortgagelist/<int:mortgage_id>', views.mortgages, name='mortgagepage'),
+
+    path('legal', views.legal, name='legal'),
 
 
 

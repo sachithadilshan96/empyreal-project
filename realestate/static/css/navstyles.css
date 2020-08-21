@@ -3180,9 +3180,10 @@ input[type=button].btn-block {
   white-space: nowrap;
   background-color: transparent;
   border: 0;
+  font-family:"Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .dropdown-item:hover, .dropdown-item:focus {
-  color: #16181b;
+  color: #f4623a;
   text-decoration: none;
   background-color: #f8f9fa;
 }
