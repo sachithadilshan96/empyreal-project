@@ -47,9 +47,12 @@
             <img class="card-img-top" src="{{ legal.photo_main.url }}" alt="Responsive image">
             <div class="card-img-overlay">
               <h2>
-                <span class="badge badge-secondary text-white"> Rate {{ legal.hourly_rate| intcomma }} LKR</span>
+                <span class="badge badge-primary text-white"> Rate {{ legal.hourly_rate| intcomma }} LKR</span>
                 {% if legal.is_verified == True %}
-                <span class="badge badge-secondary text-white">Verified</span>
+
+                <span class="badge badge-info text-white">
+                <i class="fas fa-check-circle"></i>
+                </span>
                 {% endif %}
 
               </h2>
@@ -58,24 +61,24 @@
               <div class="listing-heading text-center">
                 <h4 class="text-primary">{{ legal.title }}</h4>
                 <p>
-                  <i class="fas fa-map-marker text-secondary"></i>{{ legal.company }}, {{ legal.city }} </p>
+                  <i class="fas fa-map-marker text-secondary"></i> {{ legal.law_firm_name }}, {{ legal.city }} </p>
                 </div>
                 <hr>
                 <div class="row py-2 text-secondary">
 
 
-                  <i class="fas fa-th-large"></i> Maximum amount: LKR {{ legal.hourly_rate| intcomma }}</div>
+                  <i class="fas fa-money-bill-alt"></i>&nbsp; Maximum amount: LKR {{ legal.hourly_rate| intcomma }}</div>
                   <div class="row py-2 text-secondary">
-                    <i class="fas fa-car"></i> Agent: {{ legal.user }}</div>
+                    <i class="fas fa-user"></i>&nbsp;&nbsp; Agent: {{ legal.user }}</div>
                     <div class="row py-2 text-secondary">
-                      <i class="fas fa-car"></i> Contact: {{ legal.contact_number }}
+                      <i class="fas fa-phone-alt"></i>&nbsp;&nbsp; Contact: {{ legal.contact_number }}
 
                     </div>
 
 
 
                     <hr>
-                    <a href="#" class="btn btn-primary btn-block">More Info</a>
+                    <a href="{% url 'legalpage' legal.id %}" class="btn btn-primary btn-block">More Info</a>
                   </div>
                 </div>
               </div>

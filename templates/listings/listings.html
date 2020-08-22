@@ -47,9 +47,11 @@
                 <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="Responsive image">
                 <div class="card-img-overlay">
                   <h2>
-                    <span class="badge badge-secondary text-white">LKR {{ listing.price | intcomma }}</span>
+                    <span class="badge badge-primary text-white">LKR {{ listing.price | intcomma }}</span>
                     {% if listing.is_verified == True %}
-                    <span class="badge badge-secondary text-white">Verified</span>
+                    <span class="badge badge-info text-white">
+                    <i class="fas fa-check-circle"></i>
+                    </span>
                     {% endif %}
                   </h2>
                 </div>
@@ -70,7 +72,7 @@
                     <div class="col-6">
                       <i class="fas fa-bed"></i> Bedrooms: {{ listing.bedrooms }}</div>
                     <div class="col-6">
-                      <i class="fas fa-bath"></i> Bathrooms: {{ listing.bathrooms }}</div>
+                      <i class="fas fa-bath"></i> Bath/R: {{ listing.bathrooms }}</div>
                   </div>
                   <hr>
                   <div class="row py-2 text-secondary">

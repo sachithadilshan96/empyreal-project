@@ -46,29 +46,33 @@
           <div class="card listing-preview">
             <img class="card-img-top" src="{{ mortgage.photo_main.url }}" alt="Responsive image">
             <div class="card-img-overlay">
-              <h2>
-                <span class="badge badge-secondary text-white"> {{ mortgage.interest_rate | intcomma }}%</span>
+              <h3>
+                <span class="badge badge-primary text-white"> Rate {{ mortgage.interest_rate | intcomma }}%</span>
+
                 {% if mortgage.is_verified == True %}
-                <span class="badge badge-secondary text-white">Verified</span>
+                <span class="badge badge-info text-white">
+                <i class="fas fa-check-circle"></i>
+                </span>
                 {% endif %}
 
-              </h2>
+
+              </h3>
             </div>
             <div class="card-body">
               <div class="listing-heading text-center">
                 <h4 class="text-primary">{{ mortgage.title }}</h4>
                 <p>
-                  <i class="fas fa-map-marker text-secondary"></i>{{ mortgage.company }}, {{ mortgage.city }} </p>
+                  <i class="fas fa-map-marker text-secondary"></i> {{ mortgage.company }}, {{ mortgage.city }} </p>
                 </div>
                 <hr>
                 <div class="row py-2 text-secondary">
 
 
-                  <i class="fas fa-th-large"></i> Maximum amount: LKR {{ mortgage.maximum_loan_amount| intcomma }}</div>
+                  <i class="fas fa-money-bill-alt"></i>&nbsp; Maximum amount: LKR {{ mortgage.maximum_loan_amount| intcomma }}</div>
                   <div class="row py-2 text-secondary">
-                    <i class="fas fa-car"></i> Agent: {{ mortgage.user }}</div>
+                    <i class="fas fa-user"></i>&nbsp;&nbsp; Loan Agent: {{ mortgage.user }}</div>
                     <div class="row py-2 text-secondary">
-                      <i class="fas fa-car"></i> Contact: {{ mortgage.contact_number }}
+                      <i class="fas fa-phone-alt"></i>&nbsp;&nbsp; Contact: {{ mortgage.contact_number }}
 
                     </div>
 

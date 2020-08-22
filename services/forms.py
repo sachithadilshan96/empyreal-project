@@ -14,8 +14,9 @@ class MortgageForm(ModelForm):
                         'interest_rate',
                         'description',
                         'contact_number',
-                        'photo_main']
-                        
+                        'photo_main',
+                        'Email']
+
 class LegalForm(ModelForm):
         class Meta:
             model = Legal
@@ -28,4 +29,5 @@ class LegalForm(ModelForm):
                         'hourly_rate',
                         'description',
                         'contact_number',
-                        'photo_main']
+                        'photo_main',
+                        'Email']

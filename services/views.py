@@ -33,7 +33,7 @@ def services(request):
     return render(request, 'services/services.html')
 
 def index(request):
-  mortgages = Mortgage.objects.order_by('zipcode')
+  mortgages = Mortgage.objects.order_by('-list_date')
 
   paginator = Paginator(mortgages, 3)
   page = request.GET.get('page')
@@ -46,7 +46,7 @@ def index(request):
   return render(request, 'services/mortgagelist.html', context)
 
 def index_2(request):
-  legals= Legal.objects.order_by('zipcode')
+  legals= Legal.objects.order_by('-list_date')
 
   paginator = Paginator(legals, 3)
   page = request.GET.get('page')
