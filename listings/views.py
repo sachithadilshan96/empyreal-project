@@ -3,6 +3,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .choices import price_choices, bedroom_choices, state_choices
 
 from .models import Listing
+from django.http import HttpResponseRedirect
 
 
 
@@ -54,13 +55,13 @@ def search(request):
   if 'bedrooms' in request.GET:
     bedrooms = request.GET['bedrooms']
     if bedrooms:
-      queryset_list = queryset_list.filter(bedrooms__lte=bedrooms)
+      queryset_list = queryset_list.filter(bedrooms__gte=bedrooms).order_by('bedrooms')
 
   # Price
   if 'price' in request.GET:
     price = request.GET['price']
     if price:
-      queryset_list = queryset_list.filter(price__lte=price)
+      queryset_list = queryset_list.filter(price__lte=price).order_by('-price')
 
   context = {
     'state_choices': state_choices,
@@ -69,5 +70,6 @@ def search(request):
     'listings': queryset_list,
     'values': request.GET
   }
+
 
   return render(request, 'listings/search.html', context)

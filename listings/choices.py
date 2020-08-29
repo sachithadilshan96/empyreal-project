@@ -8,7 +8,8 @@ bedroom_choices = {
   '7':7,
   '8':8,
   '9':9,
-  '10':10
+  '10':10,
+
   }
 
 price_choices = {
@@ -26,19 +27,19 @@ price_choices = {
 
 state_choices = {
 
-       'CO': 'Colombo',
-       'KL' : 'Kalutara' ,
-       'GA' : 'Gampaha',
-       'GL':'Galle',
-       'MA':'Matara',
-       'KA':'Kandy',
-       'RA':'Rathnapura',
-       'KE':'Kegalle',
-       'BA': 'Badulla',
-       'NU':'Nuwaraeliya',
-       'KU': 'Kurunagala',
-       'HA': 'Hambantota',
-       'OT'  : 'Other',
+       'Colombo': 'Colombo',
+       'Kalutara' : 'Kalutara' ,
+       'Gampaha' : 'Gampaha',
+       'Galle':'Galle',
+       'Matara':'Matara',
+       'Kandy':'Kandy',
+       'Rathnapura':'Rathnapura',
+       'Kegalle':'Kegalle',
+       'Badulla': 'Badulla',
+       'Nuwaraeliya':'Nuwaraeliya',
+       'Kurunagala': 'Kurunagala',
+       'Hambantota': 'Hambantota',
+       'Other'  : 'Other',
 
 
 }

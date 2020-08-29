@@ -37,12 +37,7 @@
 
                 <div class="col-md-4 mb-3">
                   <label class="sr-only">State</label>
-                  <select name="state" class="form-control">
-                    <option selected="true" disabled="disabled">State (All)</option>
-                    {% for key,value in state_choices.items %}
-                      <option value="{{ key }}">{{ value }}</option>
-                    {% endfor %}
-                  </select>
+                  <input type="text" name="state" class="form-control" placeholder="state" value="{{ values.state }}">
                 </div>
               </div>
               <!-- Form Row 2 -->
@@ -50,7 +45,7 @@
                 <div class="col-md-6 mb-3">
                   <label class="sr-only">Bedrooms</label>
                   <select name="bedrooms" class="form-control">
-                    <option selected="true" disabled="disabled">Bedrooms (All)</option>
+                    <option selected="true" disabled="disabled">Bedrooms (Any)</option>
                     {% for key,value in bedroom_choices.items %}
                       <option value="{{ key }}">{{ value }}</option>
                     {% endfor %}
@@ -119,11 +114,11 @@
                   </div>
                   <hr>
                   <div class="row py-2 text-secondary">
-                    <div class="col-6">
+                    <div class="col-12">
                       <i class="fas fa-user"></i> {{ listing.realtor }}</div>
                   </div>
                   <div class="row text-secondary pb-2">
-                    <div class="col-6">
+                    <div class="col-12" >
                       <i class="fas fa-clock"></i> {{ listing.list_date | timesince }}</div>
                   </div>
                   <hr>

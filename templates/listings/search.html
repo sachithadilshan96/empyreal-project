@@ -14,7 +14,7 @@
           <br>
           <br>
           <hr>
-          <form action="{% url 'search' %}">
+          <form action="{% url 'search' %}" id="search">
             <!-- Form Row 1 -->
             <div class="form-row">
               <div class="col-md-4 mb-3">
@@ -29,16 +29,8 @@
 
               <div class="col-md-4 mb-3">
                 <label class="sr-only">State</label>
-                <select name="state" class="form-control">
-                  <option selected="true" disabled="disabled">State (All)</option>
-                  {% for key,value in state_choices.items %}
-                      <option value="{{ key }}"
-                      {% if key == values.state %}
-                        selected
-                      {% endif %}
-                      >{{ value }}</option>
-                    {% endfor %}
-                </select>
+
+                <input type="text" name="state" class="form-control" placeholder="state" value="{{ values.state }}">
               </div>
             </div>
             <!-- Form Row 2 -->
@@ -69,7 +61,7 @@
                 </select>
               </div>
             </div>
-            <button class="btn btn-primary button" type="submit"><i class="fa fa-search" aria-hidden="true"></i> SEARCH</button>
+            <button class="btn btn-primary button" type="submit" onclick="resetForm();><i class="fa fa-search" aria-hidden="true" ></i> SEARCH</button>
           </form>
         </div>
       </div>
@@ -106,6 +98,11 @@
                 <div class="card-img-overlay">
                   <h2>
                     <span class="badge badge-secondary text-white">LKR {{ listing.price | intcomma }}</span>
+                    {% if listing.is_verified == True %}
+                    <span class="badge badge-info text-white">
+                    <i class="fas fa-check-circle"></i>
+                    </span>
+                    {% endif %}
                   </h2>
                 </div>
                 <div class="card-body">
@@ -125,15 +122,15 @@
                     <div class="col-6">
                       <i class="fas fa-bed"></i> Bedrooms: {{ listing.bedrooms }}</div>
                     <div class="col-6">
-                      <i class="fas fa-bath"></i> Bathrooms: {{ listing.bathrooms }}</div>
+                      <i class="fas fa-bath"></i> Bath/R: {{ listing.bathrooms }}</div>
                   </div>
                   <hr>
                   <div class="row py-2 text-secondary">
-                    <div class="col-12">
+                    <div class="col-12" >
                       <i class="fas fa-user"></i> {{ listing.realtor }}</div>
                   </div>
                   <div class="row text-secondary pb-2">
-                    <div class="col-6">
+                    <div class="col-12" >
                       <i class="fas fa-clock"></i> {{ listing.list_date | timesince }}</div>
                   </div>
                   <hr>
