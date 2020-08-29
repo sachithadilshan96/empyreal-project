@@ -1,11 +1,14 @@
 from django.shortcuts import get_object_or_404, render
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .choices import price_choices, bedroom_choices, state_choices
-
+from django.urls import reverse_lazy,reverse
 from .models import Listing
 from django.http import HttpResponseRedirect
 
-
+def like(request,pk):
+    listing = get_object_or_404(Listing, id=pk )
+    listing.likes.add(request.user)
+    return HttpResponseRedirect(reverse('listing', args=[str(pk)]))
 
 
 def index(request):
@@ -23,9 +26,11 @@ def index(request):
 
 def listing(request, listing_id):
   listing = get_object_or_404(Listing, pk=listing_id)
-
+  likes = get_object_or_404(Listing, pk=listing_id)
+  total_likes = likes.total_likes()
   context = {
-    'listing': listing
+    'listing': listing,
+    'total_likes' : total_likes,
   }
 
   return render(request, 'listings/listing.html', context)

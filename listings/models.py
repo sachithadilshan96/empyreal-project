@@ -1,8 +1,10 @@
 from django.db import models
 from datetime import datetime
 from realtors.models import Realtor
+from django.contrib.auth.models import User
 
 class Listing(models.Model):
+  user = models.ForeignKey(User,on_delete=models.DO_NOTHING,default=2)
   realtor = models.ForeignKey(Realtor, on_delete=models.DO_NOTHING)
   title = models.CharField(max_length=200)
   address = models.CharField(max_length=200)
@@ -26,5 +28,10 @@ class Listing(models.Model):
   is_published = models.BooleanField(default=True)
   is_verified = models.BooleanField(default=False)
   list_date = models.DateTimeField(default=datetime.now, blank=True)
+  likes = models.ManyToManyField(User,related_name='adz_posts')
+
+  def total_likes(self):
+      return self.likes.count()
+
   def __str__(self):
     return self.title

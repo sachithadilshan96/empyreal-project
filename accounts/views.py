@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from contacts.models import Contact
+from listings.models import Listing
+from django.contrib.auth.decorators import login_required
+from django.template.defaultfilters import yesno
 
 def register(request):
   if request.method == 'POST':
@@ -69,3 +72,13 @@ def dashboard(request):
     'contacts': user_contacts
   }
   return render(request, 'accounts/dashboard.html', context)
+
+
+@login_required(login_url='/accounts/register')
+def userlistings (request):
+    user_listing = Listing.objects.filter(user=request.user)
+
+    context = {
+      'user_listing': user_listing
+    }
+    return render(request, 'accounts/userlistings.html', context)

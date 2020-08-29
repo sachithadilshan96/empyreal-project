@@ -43,6 +43,7 @@
   <div class="row justify-content-center mt-5 ">
 
     <div class="col-md-5">
+      {% include 'partials/_alerts.html' %}
       {% if error %}
       <div class="alert alert-danger" role="alert">
         {{ error }}
@@ -117,7 +118,7 @@
       </form>
     </div>
   </div>
-  
+
 
 
   {% endblock %}

@@ -41,31 +41,40 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h2><i class="fas fa-user-tie"></i>&nbsp;&nbsp; {{ user.first_name }}</h2>
-          {% if contacts %}
-            <p>Here are the property listings that you have inquired about</p>
+
+            <h2><i class="fas fa-user-tie"></i>&nbsp;&nbsp; {{ user.first_name }}</h2>
+            <p>Here are the property listings that you have created</p>
+            {% if user_listing %}
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Property</th>
+                  <th scope="col">#id</th>
+                  <th scope="col">Posted Date / Time</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Realtor</th>
+                  <th scope="col">Verification</th>
+                  <th scope="col">Status</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                {% for contact in contacts %}
+                {% for listing in user_listing %}
                   <tr>
-                    <td>{{ contact.id }}</td>
-                    <td>{{ contact.listing }}</td>
+                    <td>{{ listing.id }}</td>
+                    <td>{{ listing.list_date }}</td>
+                    <td>{{ listing.title }}</td>
+                    <td>{{ listing.realtor }}</td>
+                    <td>{{ listing.is_verified|yesno:"Verifed,Not Verifed"  }}</td>
+                    <td>{{ listing.is_published|yesno:"Published,Not Published"  }}</td>
                     <td>
-                      <a  href="{% url 'listing' contact.listing_id %}">View Listing</a>
+                      <a  href="{% url 'listing' listing.id %}">View Listing </a>
                     </td>
                   </tr>
                 {% endfor %}
               </tbody>
             </table>
           {% else %}
-            <p>You have not made any inquiries</p>
+
           {% endif %}
         </div>
       </div>
