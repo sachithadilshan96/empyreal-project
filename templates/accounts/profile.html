@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %} | {{user.username}} {% endblock %}
+
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <h1 class="display-4">{{user.username}}</h1>
+        <p class="lead"></p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'index' %}">
+            <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'dashboard' %}">
+               Dashboard</a>
+            </li>
+          <li class="breadcrumb-item active">  Profile</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+
+
+  <div class="container">
+      <div class="row my-2">
+          <div class="col-lg-8 order-lg-2">
+              <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                      <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                  </li>
+
+
+              </ul>
+
+              <div class="tab-content py-4">
+                  <div class="tab-pane active" id="profile">
+                      <h5 class="mb-3"><i class="far fa-user"></i>&nbsp; | {{user.username}}</h5>
+                      <div class="row">
+                          <div class="col-md-6" align="justify">
+                            <h6>Info</h6>
+                            <p>
+                                    <i class="fas fa-user-check"></i>&nbsp;Full Name - {{user.first_name}} {{user.last_name}}
+
+                            </p>
+                              <h6>About</h6>
+                              <p>
+                                    {{user.userprofile.bio}}
+
+                              </p>
+                              <h6>Contact</h6>
+                              <p >
+                                  <i class="far fa-envelope"></i> {{user.email}}<br>
+                                  <i class="fas fa-phone-square"></i> {{user.userprofile.contact_number}}
+                              </p>
+                          </div>
+                          <div class="col-md-6">
+                              <h6>Recent </h6>
+                              {% if user_listing %}
+                                {% for listing in user_listing %}
+                                  <a href="{% url 'listing' listing.id %}" class="badge badge-dark badge-pill">{{ listing.title }}</a>
+                                {% endfor %}
+                              {% else %}
+                              Post your first advertisement
+                              {% endif %}
+
+                          </div>
+
+                          <section id="dashboard" class="py-4">
+                            <div class="container">
+                              <div class="row">
+                                <div class="col-md-12"><hr>
+
+
+                                    <h5 class="mt-2"><i class="far fa-clock"></i>  My Recent Listings</h5>
+                                    {% if user_listing %}
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">#id</th>
+                                          <th scope="col">Date</th>
+                                          <th scope="col">Title</th>
+                                          <th scope="col">Realtor</th>
+                                          <th scope="col">Verification</th>
+                                          <th scope="col">Status</th>
+                                          <th></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {% for listing in user_listing %}
+                                          <tr>
+                                            <td>{{ listing.id }}</td>
+                                            <td>{{ listing.list_date|date:"d/n/Y" }}</td>
+                                            <td><a  href="{% url 'listing' listing.id %}">{{ listing.title }}</a></td>
+                                            <td>{{ listing.realtor }}</td>
+                                            <td>{{ listing.is_verified|yesno:"Verifed,Not Verifed"  }}</td>
+                                            <td>{{ listing.is_published|yesno:"Published,Not Published"  }}</td>
+
+                                          </tr>
+                                        {% endfor %}
+                                      </tbody>
+                                    </table>
+                                  {% else %}
+                                  <p> You haven't created any listing </P>
+                                  {% endif %}
+                                </div>
+                              </div>
+                            </div>
+                          </section>
+
+                      </div>
+                      <!--/row-->
+                  </div>
+
+                  <div class="tab-pane" id="edit">
+
+
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4 order-lg-1 text-center">
+              <img src="{{user.userprofile.profile_picture.url}}" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+              <a href="{% url 'userprofile' %}">
+                 Edit Profile</a><br>
+              <section id="dashboard" class="py-4">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-12">
+
+                      {% if contacts %}
+                        <h5 class="mt-2"><i class="far fa-clock"></i>  My Recent Inquiries</h5>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#id</th>
+                              <th scope="col">Title</th>
+                              <th scope="col">Contact Date</th>
+
+                              <th scope="col">Property </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for contact in contacts %}
+                              <tr>
+                                <td>{{ contact.id }}</td>
+                                <td>{{ contact.listing }}</td>
+                                <td>{{ contact.contact_date|date:"d/n/Y" }}</td>
+                                <td>
+                                  <a  href="{% url 'listing' contact.listing_id %}">View</a>
+                                </td>
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      {% else %}
+                        <p>You have not made any inquiries</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </section>
+          </div>
+
+      </div>
+  </div>
+
+
+
+  {% endblock %}

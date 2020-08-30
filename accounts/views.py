@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from contacts.models import Contact
 from listings.models import Listing
 from django.contrib.auth.decorators import login_required
 from django.template.defaultfilters import yesno
+from.models import UserProfile
+from.forms import UserProfileForm
+from adz.forms import AdzForm
 
 def register(request):
   if request.method == 'POST':
@@ -82,3 +85,54 @@ def userlistings (request):
       'user_listing': user_listing
     }
     return render(request, 'accounts/userlistings.html', context)
+
+@login_required
+def deletelistings (request,listing_id):
+    delete_listing = get_object_or_404(Listing,pk=listing_id)
+    if request.method == 'POST':
+
+        delete_listing.delete()
+        return redirect('/')
+
+
+def editlistings (request,listing_id):
+    view_listings = get_object_or_404(Listing,pk=listing_id)
+    if request.method == 'GET':
+        form = AdzForm(instance=view_listings)
+        return render(request,'accounts/editlisting.html',{'view_listings':view_listings, 'form':form})
+    else:
+
+            form = AdzForm(request.POST, instance=view_listings)
+            if form.is_valid():
+                newform = form.save(commit=False)
+                newform.user = request.user
+                newform.save()
+            return render(request,'accounts/editlisting.html',{'view_listings':view_listings, 'form':form})
+
+
+
+
+
+@login_required
+def profile (request):
+    pro = UserProfile.objects.filter(user=request.user)
+    user_listing = Listing.objects.filter(user=request.user)
+    user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    context = {
+      'user_listing': user_listing,
+      'pro':pro,
+      'contacts': user_contacts,
+    }
+    return render(request,'accounts/profile.html', context)
+
+@login_required(login_url='/accounts/login')
+def userprofile (request):
+    if request.method == 'GET':
+            return render(request,'accounts/userprofile.html',{'form':UserProfileForm()})
+    else:
+        form = UserProfileForm(request.POST,request.FILES or None)
+        if form.is_valid():
+            new_UserProfileForm = form.save(commit=False)
+            new_UserProfileForm.user = request.user
+            new_UserProfileForm.save()
+        return render(request,'accounts/userprofile.html',{'form':UserProfileForm()})

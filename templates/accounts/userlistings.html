@@ -49,26 +49,42 @@
               <thead>
                 <tr>
                   <th scope="col">#id</th>
-                  <th scope="col">Posted Date / Time</th>
+                  <th scope="col">Posted Date</th>
                   <th scope="col">Title</th>
                   <th scope="col">Realtor</th>
                   <th scope="col">Verification</th>
                   <th scope="col">Status</th>
                   <th></th>
+                  <th></th>
+
                 </tr>
               </thead>
               <tbody>
                 {% for listing in user_listing %}
                   <tr>
                     <td>{{ listing.id }}</td>
-                    <td>{{ listing.list_date }}</td>
-                    <td>{{ listing.title }}</td>
+                    <td>{{ listing.list_date|date:"d/n/Y"  }}</td>
+                    <td><a  href="{% url 'listing' listing.id %}">{{ listing.title }}</a></td>
                     <td>{{ listing.realtor }}</td>
                     <td>{{ listing.is_verified|yesno:"Verifed,Not Verifed"  }}</td>
                     <td>{{ listing.is_published|yesno:"Published,Not Published"  }}</td>
                     <td>
-                      <a  href="{% url 'listing' listing.id %}">View Listing </a>
+                      <form method="POST" action="{% url 'editlisting' listing.id %}">
+                        {% csrf_token %}
+
+                      <button class="btn-sm btn-primary-outline-primary py-0" style="font-size: 0.8em"  >Edit</button>
+                      </form>
+
                     </td>
+                    <td>
+                      <form method="POST" action="{% url 'deletelistings' listing.id  %}">
+                        {% csrf_token %}
+
+                      <button class="btn-sm btn-primary-outline-primary py-0" style="font-size: 0.8em"type="submit" >delete</button>
+                      </form>
+                    </td>
+
+
                   </tr>
                 {% endfor %}
               </tbody>
