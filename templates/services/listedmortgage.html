@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block title %} | {{ mortgagepage.company }} {% endblock %}
 
@@ -108,6 +109,59 @@
       </div>
     </div>
   </section>
+
+{% if user.is_authenticated %}
+  <section>
+
+
+  <div class="container">
+    <div class="row bootstrap snippets bootdeys">
+    <div class="col-md-8 col-sm-12">
+        <div class="comment-wrapper">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h6>Add your comments</h6>
+                </div>
+                <div class="panel-body">
+                    <form method="post" action="" enctype="multipart/form-data">
+                      {% csrf_token %}
+
+                      {{ form.body|as_crispy_field }}
+                    <button type="submit" class="btn btn-primary button" value="save" > Comment </button>
+                    </form>
+                    <div class="clearfix"></div>
+                    <hr>
+                    <ul class="media-list">
+                      {% for comment in comments %}
+                        <li class="media">
+                            <a href="#" class="pull-left">
+                                <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                            </a>
+                            <div class="media-body"  align="justify">
+                                <span class="text-muted pull-right">
+                                    <small class="text-muted">{{ comment.created|timesince }} </small>
+                                </span>
+                                <strong class="text-success">@{{ comment.user }}</strong>
+                                <h6>
+                                    {{ comment.body }}
+                                </h6>
+                            </div>
+                        </li>
+                        <br>
+                        <hr>
+                        {% endfor %}
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</section>
+{% endif %}
 
   <!-- Inquiry Modal -->
 

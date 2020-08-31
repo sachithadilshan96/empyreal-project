@@ -1,9 +1,13 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from.forms import MortgageForm,LegalForm
 from.models import Mortgage,Legal
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from contacts.forms import CommentForm
+from contacts.models import Comment
+from django.urls import reverse_lazy,reverse
+
 
 @login_required(login_url='/accounts/register')
 def mortgage (request):
@@ -61,13 +65,28 @@ def index_2(request):
 
 
 def mortgages(request, mortgage_id):
-   mortgagepage = get_object_or_404(Mortgage, pk=mortgage_id)
+    if request.method == 'GET':
+        mortgagepage = get_object_or_404(Mortgage, pk=mortgage_id)
 
-   context = {
-     'mortgagepage': mortgagepage
-   }
+        comments = Comment.objects.order_by('-created').filter(mortgage_id=mortgage_id,active=True)
+        return render(request, 'services/listedmortgage.html',{'form':CommentForm(),'mortgagepage': mortgagepage,'comments':comments})
 
-   return render(request, 'services/listedmortgage.html', context)
+    if request.method == 'POST':
+        mortgagepage = get_object_or_404(Mortgage, pk=mortgage_id)
+        comments = Comment.objects.order_by('-created').filter(mortgage_id=mortgage_id,active=True)
+
+        form = CommentForm(request.POST,request.FILES or None)
+        if form.is_valid():
+            newform = form.save(commit=False)
+            newform.user = request.user
+            newform.mortgage_id = mortgage_id
+            newform.save()
+
+            return HttpResponseRedirect(reverse('mortgagepage', args=[str(mortgage_id)]))
+        return render(request, 'services/listedmortgage.html',{'form':CommentForm(),'mortgagepage': mortgagepage,'comments':comments})
+
+
+
 
 
 def legals(request, legal_id):
@@ -78,3 +97,23 @@ def legals(request, legal_id):
    }
 
    return render(request, 'services/listedlegal.html', context)
+
+
+
+
+
+
+
+
+@login_required(login_url='/accounts/login')
+def comment(request,mortgage_id):
+    if request.method == 'GET':
+        return render(request,'adz/advertise.html',{'form':CommentForm()})
+    else:
+        form = CommentForm(request.POST,request.FILES or None)
+        if form.is_valid():
+            newform = form.save(commit=False)
+            newform.mortgage_id = mortgage_id
+            newform.save()
+
+        return render(request,'adz/advertise.html',{'form':CommentForm()})

@@ -2,6 +2,9 @@ from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
 
+
+
+
 class Mortgage(models.Model):
     title = models.CharField(max_length=200)
     company = models.CharField(max_length=200,default='')
