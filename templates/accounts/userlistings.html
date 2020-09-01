@@ -42,7 +42,7 @@
       <div class="row">
         <div class="col-md-12">
 
-            <h2><i class="fas fa-user-tie"></i>&nbsp;&nbsp; {{ user.first_name }}</h2>
+            <h2><i class="fas fa-user-tie"></i>&nbsp;&nbsp; {{ user.username }} {{ count }}</h2>
             <p>Here are the property listings that you have created</p>
             {% if user_listing %}
             <table class="table">
@@ -69,7 +69,7 @@
                     <td>{{ listing.is_verified|yesno:"Verifed,Not Verifed"  }}</td>
                     <td>{{ listing.is_published|yesno:"Published,Not Published"  }}</td>
                     <td>
-                      <form method="POST" action="{% url 'editlisting' listing.id %}">
+                      <form method="GET" action="{% url 'editlisting' listing.id %}">
                         {% csrf_token %}
 
                       <button class="btn-sm btn-primary-outline-primary py-0" style="font-size: 0.8em"  >Edit</button>

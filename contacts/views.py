@@ -6,6 +6,7 @@ from services.models import Mortgage
 from django.contrib.auth.decorators import login_required
 
 
+
 def contact(request):
   if request.method == 'POST':
     listing_id = request.POST['listing_id']

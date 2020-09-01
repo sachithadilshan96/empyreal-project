@@ -8,6 +8,8 @@ from django.template.defaultfilters import yesno
 from.models import UserProfile
 from.forms import UserProfileForm
 from adz.forms import AdzForm
+from django.urls import reverse_lazy,reverse
+
 
 def register(request):
   if request.method == 'POST':
@@ -55,7 +57,7 @@ def login(request):
     if user is not None:
       auth.login(request, user)
       messages.success(request, 'You are now logged in')
-      return redirect('dashboard')
+      return redirect('userlistings')
     else:
       messages.error(request, 'Invalid credentials')
       return redirect('login')
@@ -80,9 +82,11 @@ def dashboard(request):
 @login_required(login_url='/accounts/register')
 def userlistings (request):
     user_listing = Listing.objects.filter(user=request.user)
+    count = Listing.objects.count()
 
     context = {
-      'user_listing': user_listing
+      'user_listing': user_listing,
+      'count': count,
     }
     return render(request, 'accounts/userlistings.html', context)
 
@@ -92,7 +96,7 @@ def deletelistings (request,listing_id):
     if request.method == 'POST':
 
         delete_listing.delete()
-        return redirect('/')
+        return HttpResponseRedirect(reverse('userlistings'))
 
 
 def editlistings (request,listing_id):
@@ -100,14 +104,15 @@ def editlistings (request,listing_id):
     if request.method == 'GET':
         form = AdzForm(instance=view_listings)
         return render(request,'accounts/editlisting.html',{'view_listings':view_listings, 'form':form})
+
     else:
 
-            form = AdzForm(request.POST, instance=view_listings)
-            if form.is_valid():
+        form = AdzForm(request.POST,instance=view_listings)
+        if form.is_valid():
                 newform = form.save(commit=False)
                 newform.user = request.user
                 newform.save()
-            return render(request,'accounts/editlisting.html',{'view_listings':view_listings, 'form':form})
+                return render(request,'accounts/editlisting.html',{'view_listings':view_listings, 'form':form})
 
 
 

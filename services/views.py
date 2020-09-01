@@ -4,8 +4,8 @@ from django.http import HttpResponseRedirect
 from.forms import MortgageForm,LegalForm,BuilderForm
 from.models import Mortgage,Legal,Builder
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from contacts.forms import CommentForm,CommentBuilderForm
-from contacts.models import Comment,CommentBuilder
+from contacts.forms import CommentForm,CommentBuilderForm,CommentLegalForm
+from contacts.models import Comment,CommentBuilder,CommentLegal
 from django.urls import reverse_lazy,reverse
 
 def services(request):
@@ -116,14 +116,23 @@ def mortgages(request, mortgage_id):
 
 
 
-def legals(request, legal_id):
-   legalpage = get_object_or_404(Legal, pk=legal_id)
+def legals(request,legal_id):
+    if request.method == 'GET':
+       legalpage = get_object_or_404(Legal, pk=legal_id)
+       comments = CommentLegal.objects.order_by('-created').filter(legal_id=legal_id,active=True)
+       return render(request,'services/listedlegal.html',{'form':CommentLegalForm(),'legalpage': legalpage,'comments':comments})
+    if request.method == 'POST':
+       legalpage = get_object_or_404(Legal, pk=legal_id)
+       comments = CommentLegal.objects.order_by('-created').filter(legal_id=legal_id,active=True)
+       form = CommentLegalForm(request.POST,request.FILES or None)
+       if form.is_valid():
+           newform = form.save(commit=False)
+           newform.user = request.user
+           newform.legal_id = legal_id
+           newform.save()
 
-   context = {
-     'legalpage': legalpage
-   }
-
-   return render(request, 'services/listedlegal.html', context)
+           return HttpResponseRedirect(reverse('legalpage', args=[str(legal_id)]))
+       return render(request, 'services/listedlegal.html', {'form':CommentLegalForm(),'legalpage': legalpage,'comments':comments})
 
 
 

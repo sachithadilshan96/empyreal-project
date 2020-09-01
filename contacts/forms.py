@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Comment,CommentBuilder
+from .models import Comment,CommentBuilder,CommentLegal
 
 class CommentForm(ModelForm):
     class Meta:
@@ -9,4 +9,9 @@ class CommentForm(ModelForm):
 class CommentBuilderForm(ModelForm):
     class Meta:
         model = CommentBuilder
+        fields = ('body',)
+
+class CommentLegalForm(ModelForm):
+    class Meta:
+        model = CommentLegal
         fields = ('body',)

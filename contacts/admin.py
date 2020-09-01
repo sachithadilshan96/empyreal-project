@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import Contact
-from .models import Comment,CommentBuilder
+from .models import Comment,CommentBuilder,CommentLegal
 from services.models import Mortgage
 
 class ContactAdmin(admin.ModelAdmin):
@@ -26,3 +26,11 @@ class CommentBuilderAdmin(admin.ModelAdmin):
     search_fields = ('builder_id', 'active')
 
 admin.site.register(CommentBuilder, CommentBuilderAdmin)
+
+class CommentLegalAdmin(admin.ModelAdmin):
+    list_display = ('legal_id','created', 'active')
+    list_display_links = ('legal_id','active')
+    list_filter = ('legal_id','created')
+    search_fields = ('legal_id', 'active')
+
+admin.site.register(CommentLegal, CommentLegalAdmin)
