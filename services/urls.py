@@ -14,6 +14,10 @@ urlpatterns = [
     path('legallist', views.index_2, name='legals'),
     path('legallist/<int:legal_id>', views.legals, name='legalpage'),
 
+    path('builder', views.builder, name='builder'),
+    path('builderlist', views.index_3, name='builders'),
+    path('builderlist/<int:builder_id>', views.builders, name='builderpage'),
+
 
 
 

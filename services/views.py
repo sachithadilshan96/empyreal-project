@@ -1,13 +1,15 @@
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from.forms import MortgageForm,LegalForm
-from.models import Mortgage,Legal
+from.forms import MortgageForm,LegalForm,BuilderForm
+from.models import Mortgage,Legal,Builder
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from contacts.forms import CommentForm
-from contacts.models import Comment
+from contacts.forms import CommentForm,CommentBuilderForm
+from contacts.models import Comment,CommentBuilder
 from django.urls import reverse_lazy,reverse
 
+def services(request):
+    return render(request, 'services/services.html')
 
 @login_required(login_url='/accounts/register')
 def mortgage (request):
@@ -33,8 +35,19 @@ def legal (request):
             new_loan.save()
         return render(request,'services/legal.html',{'form':LegalForm()})
 
-def services(request):
-    return render(request, 'services/services.html')
+@login_required(login_url='/accounts/register')
+def builder (request):
+    if request.method == 'GET':
+            return render(request,'services/builder.html',{'form':BuilderForm()})
+    else:
+        form = BuilderForm(request.POST,request.FILES or None)
+        if form.is_valid():
+            new_builder = form.save(commit=False)
+            new_builder.user = request.user
+            new_builder.save()
+        return render(request,'services/builder.html',{'form':BuilderForm()})
+
+
 
 def index(request):
   mortgages = Mortgage.objects.order_by('-list_date')
@@ -61,6 +74,20 @@ def index_2(request):
   }
 
   return render(request, 'services/legallist.html', context)
+
+
+def index_3(request):
+  builders= Builder.objects.order_by('-list_date')
+
+  paginator = Paginator(builders, 3)
+  page = request.GET.get('page')
+  paged_builder = paginator.get_page(page)
+
+  context = {
+    'builders': paged_builder
+  }
+
+  return render(request, 'services/builderlist.html', context)
 
 
 
@@ -101,19 +128,24 @@ def legals(request, legal_id):
 
 
 
-
-
-
-
-@login_required(login_url='/accounts/login')
-def comment(request,mortgage_id):
+def builders(request, builder_id):
     if request.method == 'GET':
-        return render(request,'adz/advertise.html',{'form':CommentForm()})
-    else:
-        form = CommentForm(request.POST,request.FILES or None)
+        builderpage = get_object_or_404(Builder, pk=builder_id)
+
+        comments = CommentBuilder.objects.order_by('-created').filter(builder_id=builder_id,active=True)
+        return render(request, 'services/listedbuilder.html',{'form':CommentBuilderForm(),'builderpage': builderpage,'comments':comments})
+
+    if request.method == 'POST':
+        builderpage = get_object_or_404(Builder, pk=builder_id)
+
+        comments = CommentBuilder.objects.order_by('-created').filter(builder_id=builder_id,active=True)
+
+        form = CommentBuilderForm(request.POST,request.FILES or None)
         if form.is_valid():
             newform = form.save(commit=False)
-            newform.mortgage_id = mortgage_id
+            newform.user = request.user
+            newform.builder_id = builder_id
             newform.save()
 
-        return render(request,'adz/advertise.html',{'form':CommentForm()})
+            return HttpResponseRedirect(reverse('builderpage', args=[str(builder_id)]))
+        return render(request, 'services/listedbuilder.html',{'form':CommentBuilderForm(),'builderpage': builderpage,'comments':comments})

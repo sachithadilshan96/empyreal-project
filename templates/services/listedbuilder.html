@@ -3,7 +3,7 @@
 {% load humanize %}
 {% load crispy_forms_tags %}
 
-{% block title %} | {{ mortgagepage.company }} {% endblock %}
+{% block title %} | {{ builderpage.company_name }} {% endblock %}
 
 {% block content %}
 
@@ -19,9 +19,9 @@
           <br>
           <br>
           <hr>
-          <h1 class="display-4">{{ mortgagepage.title }}</h1>
+          <h1 class="display-4">{{ builderpage.title }}</h1>
           <p class="lead">
-            <i class="fas fa-map-marker"></i> {{ mortgagepage.company}} {{ mortgagepage.city }}</p>
+            <i class="fas fa-map-marker"></i> {{ builderpage.company_name}} {{ builderpage.city }}</p>
         </div>
       </div>
     </div>
@@ -36,9 +36,9 @@
             <a href="{% url 'index' %}">Home</a>
           </li>
           <li class="breadcrumb-item">
-            <a href="{% url 'mortgages' %}">Mortgage</a>
+            <a href="{% url 'builders' %}">builders</a>
           </li>
-          <li class="breadcrumb-item active">{{ mortgagepage.title }}</li>
+          <li class="breadcrumb-item active">{{ builderpage.title }}</li>
         </ol>
       </nav>
     </div>
@@ -50,38 +50,79 @@
   <!-- Listing -->
   <section id="listing" class="py-4">
     <div class="container">
-      <a href="{% url 'mortgages' %}" class="btn btn-light mb-4">Back To Mortgages</a>
+      <a href="{% url 'builders' %}" class="btn btn-light mb-4">Back To Builders</a>
       <div class="row">
         <div class="col-md-9">
           <!-- Home Main Image -->
-          <img src="{{ mortgagepage.photo_main.url }}" alt="" class="img-main img-fluid mb-3">
-
+          <img src="{{ builderpage.photo_main.url }}" alt="" class="img-main img-fluid mb-3">
+          <h4>Our Works</h4>
+          <div class="row mb-5 thumbs">
+            {% if builderpage.photo_1 %}
+            <div class="col-md-2">
+              <a href="{{ builderpage.photo_1.url }}" data-lightbox="home-images">
+                <img src="{{ builderpage.photo_1.url }}" alt="" class="img-fluid">
+              </a>
+            </div>
+            {% endif %}
+            {% if builderpage.photo_2 %}
+            <div class="col-md-2">
+              <a href="{{ builderpage.photo_2.url }}" data-lightbox="home-images">
+                <img src="{{ builderpage.photo_2.url }}" alt="" class="img-fluid">
+              </a>
+            </div>
+            {% endif %}
+            {% if builderpage.photo_3 %}
+            <div class="col-md-2">
+              <a href="{{ builderpage.photo_3.url }}" data-lightbox="home-images">
+                <img src="{{ builderpage.photo_3.url }}" alt="" class="img-fluid">
+              </a>
+            </div>
+            {% endif %}
+            {% if builderpage.photo_4 %}
+            <div class="col-md-2">
+              <a href="{{ builderpage.photo_4.url }}" data-lightbox="home-images">
+                <img src="{{ builderpage.photo_4.url }}" alt="" class="img-fluid">
+              </a>
+            </div>
+            {% endif %}
+            {% if builderpage.photo_5 %}
+            <div class="col-md-2">
+              <a href="{{ builderpage.photo_5.url }}" data-lightbox="home-images">
+                <img src="{{ builderpage.photo_5.url }}" alt="" class="img-fluid">
+              </a>
+            </div>
+            {% endif %}
+            {% if builderpage.photo_6 %}
+            <div class="col-md-2">
+              <a href="{{ builderpage.photo_6.url }}" data-lightbox="home-images">
+                <img src="{{ builderpage.photo_6.url }}" alt="" class="img-fluid">
+              </a>
+            </div>
+            {% endif %}
+          </div>
           <!-- Fields -->
           <div class="row mb-5 fields">
             <div class="col-md-6">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-secondary">
-                  <i class="fas fa-money-bill-alt"></i> Mortgages upto:
-                  <span class="float-right">LKR {{ mortgagepage.maximum_loan_amount | intcomma }}</span>
+                  <i class="fas fa-handshake"></i> Our services:
+                  <span class="float-right">{{ builderpage.service_in_brief }}</span>
                 </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-percent"></i> Interest rate:
-                  <span class="float-right">{{ mortgagepage.interest_rate }}% </span>
-                </li>
+
                 <li class="list-group-item text-secondary">
                   <i class="fas fa-phone-alt"></i> Contact us:
-                  <span class="float-right">{{ mortgagepage.contact_number }}</span>
+                  <span class="float-right">{{ builderpage.contact_number }}</span>
                 </li>
                 <li class="list-group-item text-secondary">
                   <i class="far fa-envelope"></i> Email:
-                  <span class="float-right">{{ mortgagepage.Email }}</span>
+                  <span class="float-right">{{ builderpage.Email }}</span>
                 </li>
                 <li class="list-group-item text-secondary">
                   <i class="fas fa-map-marker-alt"></i> Visit us:
-                  <span class="float-right">{{ mortgagepage.address }}</span><br>
-                  <span class="float-right">{{ mortgagepage.city }}</span><br>
-                  <span class="float-right">{{ mortgagepage.state }}</span><br>
-                  <span class="float-right">{{ mortgagepage.zipcode }}</span>
+                  <span class="float-right">{{ builderpage.address }}</span><br>
+                  <span class="float-right">{{ builderpage.city }}</span><br>
+                  <span class="float-right">{{ builderpage.state }}</span><br>
+                  <span class="float-right">{{ builderpage.zipcode }}</span>
                 </li>
 
               </ul>
@@ -92,16 +133,18 @@
           <!-- Description -->
           <div class="row mb-5">
             <div class="col-md-12" align="justify">
-                {{ mortgagepage.description }}
+              <h4><i class="fas fa-info"></i>&nbsp;&nbsp; Our services in detail</h4>
+                <br>
+                <h6>{{ builderpage.description }}</h6>
             </div>
           </div>
         </div>
         <div class="col-md-3">
           <div class="card mb-3">
-            <img class="card-img-top" src="{{mortgagepage.user.userprofile.profile_picture.url }}" alt="">
+            <img class="card-img-top" src="{{builderpage.user.userprofile.profile_picture.url }}" alt="">
             <div class="card-body">
-              <h5 class="card-title">Loan Agent</h5>
-              <h6 class="text-secondary">{{ mortgagepage.user }}</h6>
+              <h5 class="card-title">Agent</h5>
+              <h6 class="text-secondary">{{ builderpage.user }}</h6>
             </div>
           </div>
           <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="">Make An Inquiry</button>
@@ -121,7 +164,7 @@
             <div class="panel panel-info">
                 {% if user.is_authenticated %}
                 <div class="panel-heading">
-                    <h6>Add your comments</h6>
+                    <h6><i class="far fa-comments"></i>&nbsp;&nbsp;Add your comments</h6>
                 </div>
                 <div class="panel-body">
                     <form method="post" action="" enctype="multipart/form-data">

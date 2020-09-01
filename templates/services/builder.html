@@ -3,7 +3,7 @@
 {% load humanize %}
 {% load crispy_forms_tags %}
 
-{% block title %} | Mortgage {% endblock %}
+{% block title %} | Builder {% endblock %}
 
 
 {% block content %}
@@ -17,7 +17,7 @@
         <br>
         <hr>
         <h1 class="display-4">Service Listing</h1>
-        <p class="lead">Mortgage</p>
+        <p class="lead">Builder</p>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
             <a href="{% url 'services' %}">
                Services</a>
             </li>
-          <li class="breadcrumb-item active"> Mortgage</li>
+          <li class="breadcrumb-item active"> Builder</li>
         </ol>
       </nav>
     </div>
@@ -44,18 +44,18 @@
 
 
 
-  <div class="row justify-content-center mt-5 ">
+  <div class="row justify-content-center mt-5 " >
     <div class="col-md-5 "  >
-      <div class="contact-info">
-        <h3>Mortgage/Loan advertising</h3>
+			<div class="contact-info">
+        <h3>Property Builder/Renovator advertising</h3>
 
         <h6>We would love to work with you !</h6>
         <br>
-        <img src="https://images.unsplash.com/photo-1513128034602-7814ccaddd4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80" alt="image" height="800"/>
+        <img src="https://images.unsplash.com/photo-1528953030358-b0c7de371f1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=603&q=80" alt="image" height="800"/>
 
 
       </div>
-    </div>
+		</div>
 
     <div class="col-md-5">
       {% if error %}
@@ -71,7 +71,7 @@
 
 
         {{ form.title|as_crispy_field }}
-        {{ form.company|as_crispy_field }}
+        {{ form.company_name|as_crispy_field }}
         {{ form.address|as_crispy_field }}
         <div class="row">
           <div class="col-6">
@@ -85,17 +85,26 @@
         {{ form.zipcode|as_crispy_field }}
         <div class="row">
           <div class="col-6">
-            {{ form.maximum_loan_amount|as_crispy_field }}
+            {{ form.service_in_brief|as_crispy_field }}
           </div>
-          <div class="col-6">
-            {{ form.interest_rate|as_crispy_field }}
-          </div>
+
         </div>
 
         {{ form.description|as_crispy_field }}
         {{ form.contact_number|as_crispy_field }}
         {{ form.Email|as_crispy_field }}
+        <br>
+
+        <h3>Upload your completed works to gallery</h3>
+        <br>
         {{ form.photo_main|as_crispy_field }}
+
+        {{ form.photo_1|as_crispy_field }}
+        {{ form.photo_2|as_crispy_field }}
+        {{ form.photo_3|as_crispy_field }}
+        {{ form.photo_4|as_crispy_field }}
+        {{ form.photo_5|as_crispy_field }}
+        {{ form.photo_6|as_crispy_field }}
 
 
 
@@ -103,7 +112,9 @@
         <button type="submit" class="btn btn-primary button" value="save" > Create </button>
       </form>
     </div>
+
   </div>
+
 
 
 

@@ -25,3 +25,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return 'Comment by {} on {}'.format(self.created, self.body)
+
+
+class CommentBuilder(models.Model):
+    builder_id = models.IntegerField()
+    user = models.ForeignKey(User,on_delete=models.DO_NOTHING,default=2)
+    body = models.TextField(max_length=500)
+    created = models.DateTimeField(default=datetime.now, blank=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return 'Comment by {} on {}'.format(self.created, self.body)
