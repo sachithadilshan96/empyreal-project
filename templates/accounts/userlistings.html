@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block title %} | User Dashboard {% endblock %}
 
@@ -34,6 +35,7 @@
     </div>
   </section>
 
+
   <!-- Alerts -->
   {% include 'partials/_alerts.html' %}
 
@@ -42,11 +44,90 @@
       <div class="row">
         <div class="col-md-12">
 
-            <h2><i class="fas fa-user-tie"></i>&nbsp;&nbsp; {{ user.username }} {{ count }}</h2>
-            <p>Here are the property listings that you have created</p>
+            <h2><i class="fas fa-user-tie"></i>&nbsp;&nbsp; {{ user.username }} {{ this_month_listings }}</h2>
+            <!DOCTYPE HTML>
+<div class="col-md-10">
+<html>
+<head>
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+
+	title:{
+		text:"Property listings by users in this month"
+	},
+	axisX:{
+		interval: 1
+	},
+	axisY2:{
+		interlacedColor: "rgba(1,77,101,.2)",
+		gridColor: "rgba(1,77,101,.1)",
+		title: "Number of Listings"
+	},
+	data: [{
+		type: "bar",
+		name: "companies",
+		axisYType: "secondary",
+		color: "#014D65",
+		dataPoints: [
+
+			{ y: {{ this_year_jan }}, label: "January" },
+			{ y: {{ this_year_feb }}, label: "February" },
+			{ y: {{ this_year_mar }}, label: "March" },
+			{ y: {{ this_year_apr }}, label: "April" },
+			{ y: {{ this_year_may }}, label: "May" },
+			{ y: {{ this_year_jun }}, label: "June" },
+			{ y: {{ this_year_jul }}, label: "July" },
+			{ y: {{ this_year_aug }}, label: "August" },
+			{ y: {{ this_year_sep }}, label: "September" },
+			{ y: {{ this_year_oct }}, label: "October" },
+			{ y: {{ this_year_nov }}, label: "November" },
+			{ y: {{ this_year_dec }}, label: "December " },
+
+		]
+	}]
+});
+chart.render();
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>
+</div >
+  <br>
+  <br>
+  <hr>
+  <!--<div  class="col-md-9">
+    <h4> This Years Listings by Users -{{today|date:"M d, Y"}}  </h4>
+  <img src="https://quickchart.io/chart?c={type:'bar',data:{labels:
+    ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    datasets:[{label:'Property Listings',data:[
+    {{ this_year_jan }},
+    {{ this_year_feb }},
+    {{ this_year_mar }},
+    {{ this_year_apr }},
+    {{ this_year_may }},
+    {{ this_year_jun }},
+    {{ this_year_jul }},
+    {{ this_year_aug }},
+    {{ this_year_sep }},
+    {{ this_year_oct }},
+    {{ this_year_nov }},
+    {{ this_year_dec }},]}]}}"  width="100" height="400"/></div>-->
+
             {% if user_listing %}
-            <table class="table">
-              <thead>
+            <div class="col-md-10">
+              <h5>Here are the property listings that you have created</h5>
+              <br>
+
+            <table class="table ">
+              <thead class="thead-dark">
                 <tr>
                   <th scope="col">#id</th>
                   <th scope="col">Posted Date</th>
@@ -54,8 +135,9 @@
                   <th scope="col">Realtor</th>
                   <th scope="col">Verification</th>
                   <th scope="col">Status</th>
-                  <th></th>
-                  <th></th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Delete</th>
+
 
                 </tr>
               </thead>
@@ -72,7 +154,7 @@
                       <form method="GET" action="{% url 'editlisting' listing.id %}">
                         {% csrf_token %}
 
-                      <button class="btn-sm btn-primary-outline-primary py-0" style="font-size: 0.8em"  >Edit</button>
+                      <button class="btn-sm btn-primary-outline-primary py-0" style="font-size: 0.8em"  ><i class="far fa-edit"></i></button>
                       </form>
 
                     </td>
@@ -80,7 +162,7 @@
                       <form method="POST" action="{% url 'deletelistings' listing.id  %}">
                         {% csrf_token %}
 
-                      <button class="btn-sm btn-primary-outline-primary py-0" style="font-size: 0.8em"type="submit" >delete</button>
+                      <button class="btn-sm btn-primary-outline-primary py-0" style="font-size: 0.8em"type="submit" ><i class="far fa-trash-alt"></i></button>
                       </form>
                     </td>
 
@@ -89,6 +171,7 @@
                 {% endfor %}
               </tbody>
             </table>
+            </div>
           {% else %}
 
           {% endif %}

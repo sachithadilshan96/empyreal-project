@@ -9,6 +9,8 @@ from.models import UserProfile
 from.forms import UserProfileForm
 from adz.forms import AdzForm
 from django.urls import reverse_lazy,reverse
+from datetime import datetime
+from services.models import Mortgage,Legal,Builder
 
 
 def register(request):
@@ -81,12 +83,47 @@ def dashboard(request):
 
 @login_required(login_url='/accounts/register')
 def userlistings (request):
+    today = datetime.now()
     user_listing = Listing.objects.filter(user=request.user)
-    count = Listing.objects.count()
+    this_month_listings = Listing.objects.filter(list_date__year=today.year,list_date__month=today.month).count()
+    this_month_mortagage = Mortgage.objects.filter(list_date__year=today.year,list_date__month=today.month).count()
+    this_month_legal = Legal.objects.filter(list_date__year=today.year,list_date__month=today.month).count()
+    this_month_builder = Builder.objects.filter(list_date__year=today.year,list_date__month=today.month).count()
+
+    this_year_jan = Listing.objects.filter(list_date__year=today.year,list_date__month=1).count()
+    this_year_feb = Listing.objects.filter(list_date__year=today.year,list_date__month=2).count()
+    this_year_mar = Listing.objects.filter(list_date__year=today.year,list_date__month=3).count()
+    this_year_apr = Listing.objects.filter(list_date__year=today.year,list_date__month=4).count()
+    this_year_may = Listing.objects.filter(list_date__year=today.year,list_date__month=5).count()
+    this_year_jun = Listing.objects.filter(list_date__year=today.year,list_date__month=6).count()
+    this_year_jul = Listing.objects.filter(list_date__year=today.year,list_date__month=7).count()
+    this_year_aug = Listing.objects.filter(list_date__year=today.year,list_date__month=8).count()
+    this_year_sep = Listing.objects.filter(list_date__year=today.year,list_date__month=9).count()
+    this_year_oct = Listing.objects.filter(list_date__year=today.year,list_date__month=10).count()
+    this_year_nov = Listing.objects.filter(list_date__year=today.year,list_date__month=11).count()
+    this_year_dec = Listing.objects.filter(list_date__year=today.year,list_date__month=12).count()
+
 
     context = {
       'user_listing': user_listing,
-      'count': count,
+      'this_month_listings': this_month_listings,
+      'this_month_mortagage': this_month_mortagage,
+      'this_month_legal': this_month_legal,
+      'this_month_builder': this_month_builder,
+      'this_year_jan':this_year_jan,
+      'this_year_feb':this_year_feb,
+      'this_year_mar':this_year_mar,
+      'this_year_apr':this_year_apr,
+      'this_year_may':this_year_may,
+      'this_year_jun':this_year_jun,
+      'this_year_jul':this_year_jul,
+      'this_year_aug':this_year_aug,
+      'this_year_sep':this_year_sep,
+      'this_year_oct':this_year_oct,
+      'this_year_nov':this_year_nov,
+      'this_year_dec':this_year_dec,
+      'today':today,
+
     }
     return render(request, 'accounts/userlistings.html', context)
 
