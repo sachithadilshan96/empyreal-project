@@ -85,10 +85,21 @@ def dashboard(request):
 def userlistings (request):
     today = datetime.now()
     user_listing = Listing.objects.filter(user=request.user)
+    user_mortagage = Mortgage.objects.filter(user=request.user)
+    user_legal= Legal.objects.filter(user=request.user)
+    user_builder = Builder.objects.filter(user=request.user)
+
     this_month_listings = Listing.objects.filter(list_date__year=today.year,list_date__month=today.month).count()
     this_month_mortagage = Mortgage.objects.filter(list_date__year=today.year,list_date__month=today.month).count()
     this_month_legal = Legal.objects.filter(list_date__year=today.year,list_date__month=today.month).count()
     this_month_builder = Builder.objects.filter(list_date__year=today.year,list_date__month=today.month).count()
+
+    total_users = User.objects.count()
+    total_listings = Listing.objects.count()
+    total_mortagage = Mortgage.objects.count()
+    total_legal = Legal.objects.count()
+    total_builder = Builder.objects.count()
+
 
     this_year_jan = Listing.objects.filter(list_date__year=today.year,list_date__month=1).count()
     this_year_feb = Listing.objects.filter(list_date__year=today.year,list_date__month=2).count()
@@ -123,6 +134,14 @@ def userlistings (request):
       'this_year_nov':this_year_nov,
       'this_year_dec':this_year_dec,
       'today':today,
+      'total_listings': total_listings,
+      'total_mortagage':total_mortagage,
+      'total_legal' :total_legal,
+      'total_builder':total_legal,
+      'total_users':total_users,
+      'user_mortagage':user_mortagage,
+      'user_legal':user_legal,
+      'user_builder':user_builder,
 
     }
     return render(request, 'accounts/userlistings.html', context)
@@ -135,7 +154,7 @@ def deletelistings (request,listing_id):
         delete_listing.delete()
         return HttpResponseRedirect(reverse('userlistings'))
 
-
+@login_required
 def editlistings (request,listing_id):
     view_listings = get_object_or_404(Listing,pk=listing_id)
     if request.method == 'GET':

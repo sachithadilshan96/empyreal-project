@@ -15,7 +15,7 @@
   <!-- Lightbox -->
   <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}">
   <link href="https://fonts.googleapis.com/css?family=Kanit:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-  
+
 
   <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous">
 
@@ -42,6 +42,21 @@
   <link rel="stylesheet" href="{% static 'css/navstyles.css' %}">
   <!-- favicon -->
   <link rel="icon" href="{% static 'img/logo_emp.png' %}"/>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+ integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+ crossorigin=""/>
+
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+ integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+ crossorigin=""></script>
+
+ <style>
+   #mapid {
+      height:600px;  /* The height is 400 pixels */
+      width: 800px;  /* The width is the width of the web page */
+     }
+  </style>
 
   <title> Empyreal {% block title %}{% endblock %}</title>
 </head>

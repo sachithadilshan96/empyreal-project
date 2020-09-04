@@ -21,6 +21,7 @@ def mortgage (request):
             new_mortgage = form.save(commit=False)
             new_mortgage.user = request.user
             new_mortgage.save()
+            return HttpResponseRedirect(reverse('mortgage'))
         return render(request,'services/mortgage.html',{'form':MortgageForm()})
 
 @login_required(login_url='/accounts/register')
@@ -33,6 +34,7 @@ def legal (request):
             new_loan = form.save(commit=False)
             new_loan.user = request.user
             new_loan.save()
+            return HttpResponseRedirect(reverse('legal'))
         return render(request,'services/legal.html',{'form':LegalForm()})
 
 @login_required(login_url='/accounts/register')
@@ -45,6 +47,7 @@ def builder (request):
             new_builder = form.save(commit=False)
             new_builder.user = request.user
             new_builder.save()
+            return HttpResponseRedirect(reverse('builder'))
         return render(request,'services/builder.html',{'form':BuilderForm()})
 
 

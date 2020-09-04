@@ -23,5 +23,8 @@ class AdzForm(ModelForm):
                         'photo_4',
                         'photo_5',
                         'photo_6',
+                        'location',
+                        'location_lat',
+                        'location_lon',
 
                         ]

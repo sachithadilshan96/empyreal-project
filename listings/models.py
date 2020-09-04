@@ -2,6 +2,7 @@ from django.db import models
 from datetime import datetime
 from realtors.models import Realtor
 from django.contrib.auth.models import User
+from osm_field.fields import LatitudeField, LongitudeField, OSMField
 
 class Listing(models.Model):
   user = models.ForeignKey(User,on_delete=models.DO_NOTHING,default=2)
@@ -29,6 +30,9 @@ class Listing(models.Model):
   is_verified = models.BooleanField(default=False)
   list_date = models.DateTimeField(default=datetime.now, blank=True)
   likes = models.ManyToManyField(User,related_name='adz_posts')
+  location = OSMField()
+  location_lat = LatitudeField()
+  location_lon = LongitudeField()
 
   def total_likes(self):
       return self.likes.count()

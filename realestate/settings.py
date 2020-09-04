@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'crispy_forms',
+    'mathfilters',
+    'osm_field',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
