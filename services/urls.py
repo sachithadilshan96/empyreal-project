@@ -19,6 +19,9 @@ urlpatterns = [
     path('builderlist/<int:builder_id>', views.builders, name='builderpage'),
 
 
+    path('predict', views.predict, name='predict'),
+    path('result', views.predict_results, name='result'),
+
 
 
 ]

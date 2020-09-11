@@ -7,6 +7,11 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from contacts.forms import CommentForm,CommentBuilderForm,CommentLegalForm
 from contacts.models import Comment,CommentBuilder,CommentLegal
 from django.urls import reverse_lazy,reverse
+from osm_field.fields import LatitudeField, LongitudeField, OSMField
+from .forms import PredictForm
+import joblib
+import numpy as np
+import pandas as pd
 
 def services(request):
     return render(request, 'services/services.html')
@@ -161,3 +166,63 @@ def builders(request, builder_id):
 
             return HttpResponseRedirect(reverse('builderpage', args=[str(builder_id)]))
         return render(request, 'services/listedbuilder.html',{'form':CommentBuilderForm(),'builderpage': builderpage,'comments':comments})
+
+
+
+def predict(request):
+    if request.method == 'GET':
+     return render(request,"predict.html",{'form' : PredictForm()})
+    else:
+        form= PredictForm(request.POST or None)
+        modelL = joblib.load('empyreal.sav')
+        if form.is_valid():
+            bedrooms= form.cleaned_data.get("bedrooms")
+            bathrooms= form.cleaned_data.get("bathrooms")
+            sqft_living= form.cleaned_data.get("sqft_living")
+            sqft_lot= form.cleaned_data.get("sqft_lot")
+            floors= form.cleaned_data.get("floors")
+            waterfront= form.cleaned_data.get("waterfront")
+            view= form.cleaned_data.get("view")
+            condition= form.cleaned_data.get("condition")
+            grade= form.cleaned_data.get("grade")
+            sqft_above= form.cleaned_data.get("sqft_above")
+            sqft_basement= form.cleaned_data.get("sqft_basement")
+            yr_built= form.cleaned_data.get("yr_built")
+            yr_renovated= form.cleaned_data.get("yr_renovated")
+            zipcode= form.cleaned_data.get("zipcode")
+            location_lat= form.cleaned_data.get("location_lat")
+            location_lon= form.cleaned_data.get("location_lon")
+            sqft_living15= form.cleaned_data.get("sqft_living15")
+            sqft_lot15= form.cleaned_data.get("sqft_lot15")
+
+            ans =modelL.predict([[
+                                    bedrooms,
+                                    bathrooms,
+                                    sqft_living,
+                                    sqft_lot,
+                                    floors,
+                                    waterfront,
+                                    view,
+                                    condition,
+                                    grade,
+                                    sqft_above,
+                                    sqft_basement,
+                                    yr_built,
+                                    yr_renovated,
+                                    zipcode,
+                                    location_lat,
+                                    location_lon,
+                                    sqft_living15,
+                                    sqft_lot15,
+
+            ]])
+
+            #lgb_predict = modelL.predict([[3,1.00,1180,5650,1.0,0,0,3,7,1180,0,1955,0,98178,47.5112,-122.257,1340,5650]])
+            #lgb_p = float(np.round(lgb_predict[0], 2))
+
+            print(ans)
+            return render(request,"result.html")
+
+def predict_results(request):
+    if request.method == 'GET':
+     return render(request,"result.html")

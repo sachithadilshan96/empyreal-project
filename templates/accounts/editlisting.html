@@ -80,6 +80,11 @@
 
         {{ form.zipcode|as_crispy_field }}
 
+        {{ form.location|as_crispy_field}}
+
+        {{ form.location_lat|as_crispy_field}}
+        {{ form.location_lon|as_crispy_field}}
+
         {{ form.description|as_crispy_field }}
         {{ form.price|as_crispy_field }}
         <div class="row">
@@ -125,7 +130,7 @@
 
 
 
-        <button type="submit" class="btn btn-primary button" value="save" > Create </button>
+        <button type="submit" class="btn btn-primary button" value="save" > Save </button>
       </form>
     </div>
   </div>

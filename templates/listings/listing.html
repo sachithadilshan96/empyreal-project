@@ -201,7 +201,8 @@ mymap.on('click', onMapClick);
             {%  csrf_token %}
             <div class="row mb-5 fields">
             <div class="col-md-6">
-            <button type="submit", name="listing_id", value="{{ listing.id }}" class="btn-primary  btn-sm"><i class="far fa-thumbs-up"></i> | {{ total_likes }}  Interested</button></div>
+            <button type="submit", name="listing_id", value="{{ listing.id }}" class="btn-primary  btn-sm">
+            <i class="far fa-thumbs-up"></i> | {{ total_likes }}  Interested</button></div>
 
             </div>
           </from>
