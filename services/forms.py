@@ -79,7 +79,7 @@ class PredictForm(forms.Form):
     view = forms.IntegerField(label='Rate the outside view from the house',widget=forms.Select(choices=View_Choices))
     condition = forms.IntegerField(label='Rate the construction condition',widget=forms.Select(choices=Condition_Choices))
     grade = forms.IntegerField(label='Rate building design',widget=forms.Select(choices=Grade_Choices))
-    sqft_above = forms.IntegerField(label='Sqft of above ground level')
+    sqft_above = forms.IntegerField(label='Sqft above ground level')
     sqft_basement = forms.IntegerField(label='Sqft of the basement')
     yr_built = forms.IntegerField(label='Year built')
     yr_renovated = forms.IntegerField(label='Year renovated')

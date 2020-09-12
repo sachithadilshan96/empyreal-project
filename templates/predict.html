@@ -43,30 +43,132 @@
 
 
 
+{% load static %}
+<section class="py-5">
+  <div class="container">
+  <div class="row justify-content-center mt-12 " style="background-image: url('{% static '/img/Predictions.jpg' %}');">
 
-  <div class="row justify-content-center mt-5 " >
     <div class="col-md-5 "  >
 			<div class="contact-info">
-        <h3>Predict</h3>
-
-        <h6>We would love to work with you !</h6>
         <br>
-        <img src="https://i0.wp.com/brendaknowles.com/wp-content/uploads/2018/10/influence-ali-morshedlou-566510-unsplash.jpg?resize=600%2C900&ssl=1" alt="image" height="800"/>
+        <br>
+        <h1><b><i class="fas fa-brain"></i>	&nbsp;Empyreal Predict</b></h1>
+
+        <h6>	&nbsp;	&nbsp;Enter required fields to estimate your house price</h6>
+        <br>
+
 
 
       </div>
 		</div>
 
     <div class="col-md-5">
-      <form method="POST" action="#">
+
+      {% if error %}
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+      </div>
+      {% endif %}
+      <br>
+      <h3> </h3>
+      <br>
+      <form method="post" action="" enctype="multipart/form-data">
+
         {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" name="" value="submit">
+
+        <div class="row">
+          <div class="col-6">
+            {{ form.bedrooms|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.bathrooms|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            {{ form.sqft_living|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.sqft_lot|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            {{ form.floors|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.waterfront|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            {{ form.view|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.condition|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            {{ form.grade|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.sqft_above|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            {{ form.sqft_basement|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.yr_built|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            {{ form.yr_renovated|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.zipcode|as_crispy_field }}
+          </div>
+        </div>
+
+        {{ form.location_lat|as_crispy_field }}
+        {{ form.location_lon|as_crispy_field }}
+
+        <div class="row">
+          <div class="col-6">
+            {{ form.sqft_living15|as_crispy_field }}
+          </div>
+          <div class="col-6">
+            {{ form.sqft_lot15|as_crispy_field }}
+          </div>
+        </div>
+
+
+
+
+        {% if successful_submit %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("exampleModal").modal('show');
+        });
+    </script>
+    {% endif %}
+        <button type="submit" class="btn btn-info button" value="save" > <i class="fas fa-tachometer-alt"></i> 	&nbsp;	&nbsp;Submit </button>
+
+
+        <br>
+        <br
       </form>
 
     </div>
 
   </div>
+</div>
+
+</section>
+
 
 
 

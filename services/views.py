@@ -216,12 +216,15 @@ def predict(request):
                                     sqft_lot15,
 
             ]])
-
+            predict_value = float(np.round(ans[0], 2))
+            context = {
+              'predict_value': predict_value
+            }
             #lgb_predict = modelL.predict([[3,1.00,1180,5650,1.0,0,0,3,7,1180,0,1955,0,98178,47.5112,-122.257,1340,5650]])
             #lgb_p = float(np.round(lgb_predict[0], 2))
 
             print(ans)
-            return render(request,"result.html")
+            return render(request,"result.html",context)
 
 def predict_results(request):
     if request.method == 'GET':
