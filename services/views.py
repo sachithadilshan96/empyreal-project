@@ -218,7 +218,25 @@ def predict(request):
             ]])
             predict_value = float(np.round(ans[0], 2))
             context = {
-              'predict_value': predict_value
+            'bedrooms':bedrooms,
+            'bathrooms':bathrooms,
+            'sqft_living':sqft_living,
+            'sqft_lot':sqft_lot,
+            'floors':floors,
+            'waterfront':waterfront,
+            'view':view,
+            'condition':condition,
+            'grade':grade,
+            'sqft_above':sqft_above,
+            'sqft_basement':sqft_basement,
+            'yr_built':yr_built,
+            'yr_renovated':yr_renovated,
+            'zipcode':zipcode,
+            'location_lat':location_lat,
+            'location_lon':location_lon,
+            'sqft_living15':sqft_living15,
+            'sqft_lot15':sqft_lot15,
+            'predict_value': predict_value,
             }
             #lgb_predict = modelL.predict([[3,1.00,1180,5650,1.0,0,0,3,7,1180,0,1955,0,98178,47.5112,-122.257,1340,5650]])
             #lgb_p = float(np.round(lgb_predict[0], 2))
