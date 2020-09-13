@@ -7,56 +7,130 @@
 
 
 {% block content %}
-<section id="showcase-inner" class="py-5 text-white">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-12">
-        <br>
-        <br>
-        <br>
-        <br>
-        <hr>
-        <h1 class="display-4">Service Listing</h1>
-        <p class="lead">Legal</p>
-      </div>
-    </div>
-  </div>
-</section>
+
 <!-- Breadcrumb -->
-<section id="bc" class="mt-3">
-  <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="{% url 'index' %}">
-            <i class="fas fa-home"></i> Home</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="{% url 'services' %}">
-               Services</a>
-            </li>
-          <li class="breadcrumb-item active"> Legal Services</li>
-        </ol>
-      </nav>
-    </div>
-  </section>
+
 
 
 
 {% load static %}
-<section class="py-5">
-  <div class="container">
-  <div class="row justify-content-center mt-12 " style="background-image: url('{% static '/img/Predictions.jpg' %}');">
+<head>
+<style>
+.myDiv {
+  
+  background-color:rgba(255,255,255,0.6);
 
-    <div class="col-md-12 "  >
+}
+
+</style>
+<script>
+		function printDiv(divName){
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+
+			document.body.innerHTML = printContents;
+
+			window.print();
+
+			document.body.innerHTML = originalContents;
+
+		}
+	</script>
+</head>
+
+<body style="background-image: url('{% static '/img/Predictions - Copy.jpg' %}');">
+
+
+<section class="py-5">
+  <hr>
+  <br>
+  <div class="container ">
+  <div class="row justify-content-center mt-12  " >
+
+    <div class="row justify-content-center mt-12 myDiv  " id='printMe' >
+
 			<div class="contact-info">
         <br>
         <br>
-        <h1><b><i class="fas fa-brain"></i>	&nbsp;Empyreal Predict Results - {{bedrooms}}xxx{{predict_value}}</b></h1>
 
-        <h6>	&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;Here is your results</h6>
+
+        <h1>&nbsp;<b><i class="fas fa-laptop-house"></i></i>	&nbsp;Empyreal Predicted Results </b>&nbsp;</h1>
+        <hr>
+        <h6>	&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;Title  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp; :      {{title}}</h6>
+
+        <h6>	&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;&nbsp;	&nbsp;Customer  &nbsp;&nbsp;&nbsp;: {{name}}</h6>
+        <hr>
         <br>
+        <div class="col-md-12 myDiv "  >
+        <table class="table table-sm ">
+          <thead>
+            <tr>
+              <th scope="col"><h4>No</h4></th>
+              <th scope="col"><h4>Feature</h4></th>
+              <th scope="col"><h4>Entered Value</h4></th>
 
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td><h6>Bedrooms<h6></td>
+              <td align="right"><h6>{{bedrooms}}<h6></td>
+
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td><h6>Bathrooms<h6></td>
+              <td align="right"><h6>{{bathrooms}}<h6></td>
+
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td><h6> Lot area<h6></td>
+              <td align="right"><h6>{{sqft_lot}}<h6></td>
+
+            </tr>
+            <tr>
+              <th scope="row">4</th>
+              <td><h6>Floors<h6></td>
+              <td align="right"><h6>{{floors}}<h6></td>
+
+            </tr>
+            <tr>
+              <th scope="row">5</th>
+              <td><h6>Building Grade <h6></td>
+              <td align="right"><h6>{{grade}}<h6></td>
+
+            </tr>
+            <tr>
+              <th scope="row">6</th>
+              <td><h6>Year built<h6></td>
+              <td align="right"><h6>{{yr_built}}<h6></td>
+
+            </tr>
+            <tr>
+              <th scope="row">7</th>
+              <td><h6>Year renovated<h6></td>
+              <td align="right"><h6>{{yr_renovated}}<h6></td>
+
+            </tr>
+            <tr>
+              <th scope="row">8</th>
+              <td><h6>Zipcode<h6></td>
+              <td align="right"><h6>{{zipcode}}<h6></td>
+
+            </tr>
+            <tr>
+
+              <td colspan="2"><h3>		&nbsp;&nbsp;	&nbsp;&nbsp;Empyreal Prediction Value<h3></td>
+              <td align="right"><h3><i class="fas fa-dollar-sign"></i> {{predict_value}}<h3></td>
+
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
 
 
       </div>
@@ -65,11 +139,25 @@
 
 
   </div>
+
 </div>
 
+
+
+</div>
 </section>
+<div class="container">
+<div class="row justify-content-center-md-12">
+
+&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;
+<button class="btn btn-dark button" onclick="printDiv('printMe')">Print Results</button>
+
+</div>
+<br>
+</div>
 
 
+ </body>
 
 
 

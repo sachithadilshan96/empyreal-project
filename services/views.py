@@ -176,6 +176,8 @@ def predict(request):
         form= PredictForm(request.POST or None)
         modelL = joblib.load('empyreal.sav')
         if form.is_valid():
+            title= form.cleaned_data.get("title")
+            name= form.cleaned_data.get("name")
             bedrooms= form.cleaned_data.get("bedrooms")
             bathrooms= form.cleaned_data.get("bathrooms")
             sqft_living= form.cleaned_data.get("sqft_living")
@@ -218,6 +220,8 @@ def predict(request):
             ]])
             predict_value = float(np.round(ans[0], 2))
             context = {
+            'title':title,
+            'name':name,
             'bedrooms':bedrooms,
             'bathrooms':bathrooms,
             'sqft_living':sqft_living,

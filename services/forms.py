@@ -70,6 +70,8 @@ Condition_Choices= [tuple([x,x]) for x in range(1,6)]
 Grade_Choices= [tuple([x,x]) for x in range(1,14)]
 
 class PredictForm(forms.Form):
+    name = forms.CharField(label='Enter your name')
+    title = forms.CharField(label='Enter title')
     bedrooms = forms.IntegerField(label='No of bedrooms')
     bathrooms = forms.IntegerField(label='No of bathrooms')
     sqft_living = forms.IntegerField(label='Sqft of living area')
@@ -77,7 +79,7 @@ class PredictForm(forms.Form):
     floors = forms.IntegerField(label='Floors')
     waterfront = forms.IntegerField(label='Waterfront or not',widget=forms.Select(choices=Waterfront_Choices))
     view = forms.IntegerField(label='Rate the outside view from the house',widget=forms.Select(choices=View_Choices))
-    condition = forms.IntegerField(label='Rate the construction condition',widget=forms.Select(choices=Condition_Choices))
+    condition = forms.IntegerField(label='Rate the physical condition of the house',widget=forms.Select(choices=Condition_Choices))
     grade = forms.IntegerField(label='Rate building design',widget=forms.Select(choices=Grade_Choices))
     sqft_above = forms.IntegerField(label='Sqft above ground level')
     sqft_basement = forms.IntegerField(label='Sqft of the basement')

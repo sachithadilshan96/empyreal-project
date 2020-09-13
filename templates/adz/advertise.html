@@ -73,7 +73,7 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
               <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                
+
                 <li
                 {% if '/' == request.path %}
                 class="nav-item active mr-3"
@@ -258,6 +258,54 @@
         </div>
         <div class="col-6">
           {{ form.lot_size|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.sqft_living|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.floors|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.waterfront|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.view|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.condition|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.grade|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.sqft_above|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.sqft_basement|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.yr_built|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.yr_renovated|as_crispy_field }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          {{ form.sqft_living15|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.sqft_lot15|as_crispy_field }}
         </div>
       </div>
       {{ form.photo_main|as_crispy_field }}
