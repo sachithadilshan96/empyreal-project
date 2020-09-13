@@ -5,22 +5,33 @@
 {% block title %} | {{ listing.title }} {% endblock %}
 
 {% block content %}
+<head>
+  <style>
+  .myDiv {
+
+    background-color:rgba(255,69,0,0.6);
+
+  }
+
+</style>
+
+</head>
 
 <section id="showcase-inner" class="py-5 text-white" >
 
-    <div class="container">
+  <div class="container">
 
-      <div class="row text-center">
-        <div class="col-md-12">
+    <div class="row text-center">
+      <div class="col-md-12">
 
-          <br>
-          <br>
-          <br>
-          <br>
-          <hr>
-          <h1 class="display-4">{{ listing.title }}</h1>
-          <p class="lead">
-            <i class="fas fa-map-marker"></i> {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <h1 class="display-4">{{ listing.title }}</h1>
+        <p class="lead">
+          <i class="fas fa-map-marker"></i> {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}</p>
         </div>
       </div>
     </div>
@@ -100,8 +111,37 @@
             {% endif %}
           </div>
           <!-- Fields -->
+
+          <div class="col-md-12 myDiv">
+            <br>
+            <h3>Empyreal Analysis Report - <i class="fas fa-search-dollar"></i></h3>
+            <table class="table table-striped">
+              <thead>
+
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">              <h6>Predicted value according to past market data</h6>
+                  </th>
+                  <td><h6><i class="fas fa-dollar-sign"></i> {{predict_value| intcomma}}</h6></td>
+
+                </tr>
+                <tr>
+                  <th scope="row">              <h6>Listed price by owner</h6>
+                  </th>
+                  <td><h6><i class="fas fa-dollar-sign"></i> {{ listed_price | intcomma }}</h6></td>
+
+                </tr>
+
+              </tbody>
+            </table>
+
+            <hr>
+
+          </div>
+
           <div class="row mb-5 fields">
-            <div class="col-md-6">
+            <div class="col-md-5">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item text-secondary">
                   <i class="fas fa-money-bill-alt"></i> Asking Price:
@@ -158,30 +198,30 @@
             <div class="col-md-12" align="justify">
               <h4><i class="fas fa-map-marker-alt"></i>	&nbsp;	&nbsp;Location</h4><br><h6>  {{ listing.location }}  </h6>
               <div id="mapid">
-   <script>
-     var mymap = L.map('mapid').setView([{{ listing.location_lat }}, {{ listing.location_lon }}], 12);
-     var marker = L.marker([{{ listing.location_lat }}, {{ listing.location_lon }}]).addTo(mymap);
-     L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=dVv9EcA0CgewnZmmRobm', {
-  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-  maxZoom: 18,
-  id: 'mapbox/streets-v11',
-  tileSize: 512,
-  zoomOffset: -1,
-  accessToken: 'your.mapbox.access.token'
-}).addTo(mymap);
-var popup = L.popup();
+                <script>
+                var mymap = L.map('mapid').setView([{{ listing.location_lat }}, {{ listing.location_lon }}], 12);
+                var marker = L.marker([{{ listing.location_lat }}, {{ listing.location_lon }}]).addTo(mymap);
+                L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=dVv9EcA0CgewnZmmRobm', {
+                  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                  maxZoom: 18,
+                  id: 'mapbox/streets-v11',
+                  tileSize: 512,
+                  zoomOffset: -1,
+                  accessToken: 'your.mapbox.access.token'
+                }).addTo(mymap);
+                var popup = L.popup();
 
-function onMapClick(e) {
-  popup
-      .setLatLng(e.latlng)
-      .setContent("You clicked the map at " + e.latlng.toString())
-      .openOn(mymap);
-}
+                function onMapClick(e) {
+                  popup
+                  .setLatLng(e.latlng)
+                  .setContent("You clicked the map at " + e.latlng.toString())
+                  .openOn(mymap);
+                }
 
-mymap.on('click', onMapClick);
-   </script>
+                mymap.on('click', onMapClick);
+                </script>
 
- </div>
+              </div>
             </div>
           </div>
         </div>
@@ -200,63 +240,63 @@ mymap.on('click', onMapClick);
           <form action="{% url 'like_listing' listing.pk %}" method="POST">
             {%  csrf_token %}
             <div class="row mb-5 fields">
-            <div class="col-md-6">
-            <button type="submit", name="listing_id", value="{{ listing.id }}" class="btn-primary  btn-sm">
-            <i class="far fa-thumbs-up"></i> | {{ total_likes }}  Interested</button></div>
+              <div class="col-md-6">
+                <button type="submit", name="listing_id", value="{{ listing.id }}" class="btn-primary  btn-sm">
+                  <i class="far fa-thumbs-up"></i> | {{ total_likes }}  Interested</button></div>
+
+                </div>
+              </from>
 
             </div>
-          </from>
+          </div>
+        </div>
+      </section>
 
+      <!-- Inquiry Modal -->
+      <div class="modal fade" id="inquiryModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span>&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="{% url 'contact' %}" method="POST">
+                {% csrf_token %}
+                {% if user.is_authenticated %}
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                {% else %}
+                <input type="hidden" name="user_id" value="0">
+                {% endif %}
+                <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
+                <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                <div class="form-group">
+                  <label for="property_name" class="col-form-label">Property:</label>
+                  <input type="text" name="listing" class="form-control" value="{{ listing.title }}">
+                </div>
+                <div class="form-group">
+                  <label for="name" class="col-form-label">Name:</label>
+                  <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+                </div>
+                <div class="form-group">
+                  <label for="email" class="col-form-label">Email:</label>
+                  <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+                </div>
+                <div class="form-group">
+                  <label for="phone" class="col-form-label">Phone:</label>
+                  <input type="text" name="phone" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="message" class="col-form-label">Message:</label>
+                  <textarea name="message" class="form-control"></textarea>
+                </div>
+                <hr>
+                <input type="submit" value="Send" class="btn btn-block btn-secondary">
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Inquiry Modal -->
-  <div class="modal fade" id="inquiryModal" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
-          <button type="button" class="close" data-dismiss="modal">
-            <span>&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form action="{% url 'contact' %}" method="POST">
-            {% csrf_token %}
-            {% if user.is_authenticated %}
-              <input type="hidden" name="user_id" value="{{ user.id }}">
-            {% else %}
-              <input type="hidden" name="user_id" value="0">
-            {% endif %}
-            <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
-            <input type="hidden" name="listing_id" value="{{ listing.id }}">
-            <div class="form-group">
-              <label for="property_name" class="col-form-label">Property:</label>
-              <input type="text" name="listing" class="form-control" value="{{ listing.title }}">
-            </div>
-            <div class="form-group">
-              <label for="name" class="col-form-label">Name:</label>
-              <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
-            </div>
-            <div class="form-group">
-              <label for="email" class="col-form-label">Email:</label>
-              <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
-            </div>
-            <div class="form-group">
-              <label for="phone" class="col-form-label">Phone:</label>
-              <input type="text" name="phone" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="message" class="col-form-label">Message:</label>
-              <textarea name="message" class="form-control"></textarea>
-            </div>
-            <hr>
-            <input type="submit" value="Send" class="btn btn-block btn-secondary">
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
+      {% endblock %}

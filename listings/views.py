@@ -75,7 +75,7 @@ def listing(request, listing_id):
   ]])
   predict_value = float(np.round(ans[0], 2))
 
-  print (predict_value)
+  listed_price = format(float(listing.price),'.2f')
 
 
 
@@ -84,6 +84,8 @@ def listing(request, listing_id):
   context = {
     'listing': listing,
     'total_likes' : total_likes,
+    'predict_value':predict_value,
+    'listed_price':listed_price,
   }
 
   return render(request, 'listings/listing.html', context)
