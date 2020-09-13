@@ -4,6 +4,9 @@ from .choices import price_choices, bedroom_choices, state_choices
 from django.urls import reverse_lazy,reverse
 from .models import Listing
 from django.http import HttpResponseRedirect
+import joblib
+import numpy as np
+import pandas as pd
 
 def like(request,pk):
     listing = get_object_or_404(Listing, id=pk )
@@ -28,6 +31,56 @@ def listing(request, listing_id):
   listing = get_object_or_404(Listing, pk=listing_id)
   likes = get_object_or_404(Listing, pk=listing_id)
   total_likes = likes.total_likes()
+  model = joblib.load('empyreal.sav')
+
+  bedrooms = listing.bedrooms
+  bathrooms = listing.bathrooms
+  sqft_living = listing.sqft_living
+  sqft_lot = listing.lot_size
+  floors = listing.floors
+  waterfront =listing.waterfront
+  view = listing.view
+  condition =listing.condition
+  grade = listing.grade
+  sqft_above =listing.sqft_above
+  sqft_basement =listing.sqft_basement
+  yr_built =listing.yr_built
+  yr_renovated =listing.yr_renovated
+  zipcode= listing.zipcode
+  location_lat= float(listing.location_lat)
+  location_lon= float(listing.location_lon)
+  sqft_living15=listing.sqft_living15
+  sqft_lot15=listing.sqft_lot15
+
+  ans =model.predict([[
+                          bedrooms,
+                          bathrooms,
+                          sqft_living,
+                          sqft_lot,
+                          floors,
+                          waterfront,
+                          view,
+                          condition,
+                          grade,
+                          sqft_above,
+                          sqft_basement,
+                          yr_built,
+                          yr_renovated,
+                          zipcode,
+                          location_lat,
+                          location_lon,
+                          sqft_living15,
+                          sqft_lot15,
+
+  ]])
+  predict_value = float(np.round(ans[0], 2))
+
+  print (predict_value)
+
+
+
+
+
   context = {
     'listing': listing,
     'total_likes' : total_likes,

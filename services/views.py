@@ -174,7 +174,7 @@ def predict(request):
      return render(request,"predict.html",{'form' : PredictForm()})
     else:
         form= PredictForm(request.POST or None)
-        modelL = joblib.load('empyreal.sav')
+        model = joblib.load('empyreal.sav')
         if form.is_valid():
             title= form.cleaned_data.get("title")
             name= form.cleaned_data.get("name")
@@ -197,7 +197,7 @@ def predict(request):
             sqft_living15= form.cleaned_data.get("sqft_living15")
             sqft_lot15= form.cleaned_data.get("sqft_lot15")
 
-            ans =modelL.predict([[
+            ans =model.predict([[
                                     bedrooms,
                                     bathrooms,
                                     sqft_living,
