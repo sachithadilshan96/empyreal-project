@@ -121,7 +121,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">              <h6>Predicted value according to past market data</h6>
+                  <th scope="row">              <h6>Predicted value using  past market data</h6>
                   </th>
                   <td><h6><i class="fas fa-dollar-sign"></i> {{predict_value| intcomma}}</h6></td>
 
@@ -137,6 +137,7 @@
             </table>
 
             <hr>
+            {{ my_map|safe }}
 
           </div>
 
