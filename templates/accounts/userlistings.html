@@ -22,7 +22,7 @@
           Tip 2: you can also add an image using data-image tag
       -->
 
-        <div class="sidebar-wrapper">
+        <div class="sidebar">
           <ul class="nav">
             <li class="nav-item active  ">
               <a class="nav-link" href="{% url 'index' %}">
@@ -44,16 +44,16 @@
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="./tables.html">
+              <a class="nav-link" href="{% url 'marketpredict' %}">
                 <i class="material-icons">content_paste</i>
 
-                <p>Table List</p>
+                <p>Market Predictions</p>
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link" href="./typography.html">
+              <a class="nav-link" href="#mylisting">
                 <i class="material-icons">library_books</i>
-                <p>Typography</p>
+                <p>My Listings</p>
               </a>
             </li>
             <li class="nav-item ">
@@ -68,18 +68,8 @@
                 <p>Maps</p>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="./notifications.html">
-                <i class="material-icons">notifications</i>
-                <p>Notifications</p>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link" href="./rtl.html">
-                <i class="material-icons">language</i>
-                <p>RTL Support</p>
-              </a>
-            </li>
+
+
 
           </ul>
         </div>
@@ -239,7 +229,7 @@
                 </div>
               </div>
               <br>
-              <div class="col-md-12">
+              <div class="col-md-12" id="mylisting">
                 {% if user_listing %}
                 <div class="card">
                   <div class="card-header card-header-primary">
