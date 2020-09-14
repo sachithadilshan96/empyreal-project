@@ -14,6 +14,16 @@
   }
 
 </style>
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
 
 </head>
 
@@ -111,8 +121,12 @@
             {% endif %}
           </div>
           <!-- Fields -->
-
-          <div class="col-md-12 myDiv">
+          <div class="col-md-12  " >
+            <button onclick="myFunction()" class="btn btn-block btn-secondary"><h4>Empyreal analysis for this property</h4></button>
+            <br>
+            <hr>
+          </div>
+          <div class="col-md-12 myDiv" id="myDIV" style="display:none">
             <br>
             <h3>Empyreal Analysis Report - <i class="fas fa-search-dollar"></i></h3>
             <table class="table table-striped">
@@ -137,167 +151,180 @@
             </table>
 
             <hr>
-            {{ my_map|safe }}
-
+            <div class="col-md-12">
+              <a href="{% url 'map' listing.id %}"
+              target="popup"
+              onclick="window.open('{% url 'map' listing.id %}','popup','width=1000,height=600'); return false;">
+              <button  class="btn btn-primary button"><h6><i class="fas fa-map-marker-alt"></i>	&nbsp;	&nbsp;Property Heat Map</h6></button>
+            </a>
+            <a href="{% url 'map' listing.id %}"
+            target="popup"
+            onclick="window.open('{% url 'avmap' listing.id %}','popup','width=1000,height=600'); return false;">
+            <button  class="btn btn-primary button"><h6><i class="fas fa-map-marker-alt"></i>	&nbsp;	&nbsp;Property Heat Map</h6></button>
+          </a>
+            <br>
+            <hr>
           </div>
 
-          <div class="row mb-5 fields">
-            <div class="col-md-5">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-money-bill-alt"></i> Asking Price:
-                  <span class="float-right">${{ listing.price | intcomma }}</span>
-                </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-bed"></i> Bedrooms:
-                  <span class="float-right">{{ listing.bedrooms }}</span>
-                </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-bath"></i> Bathrooms:
-                  <span class="float-right">{{ listing.bathrooms }}</span>
-                </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-car"></i> Garage:
-                  <span class="float-right">{{ listing.garage }}
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-6">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-th-large"></i> Square Feet:
-                  <span class="float-right">{{ listing.sqft }}</span>
-                </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-square"></i> Lot Size:
-                  <span class="float-right">{{ listing.lot_size }} Acres
-                  </span>
-                </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-calendar"></i> Listing Date:
-                  <span class="float-right">{{ listing.list_date }}</span>
-                </li>
-                <li class="list-group-item text-secondary">
-                  <i class="fas fa-bed"></i> Realtor:
-                  <span class="float-right">{{ listing.realtor }}
-                  </span>
-                </li>
+        </div>
 
-
-              </ul>
-            </div>
+        <div class="row mb-5 fields">
+          <div class="col-md-5">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-secondary">
+                <i class="fas fa-money-bill-alt"></i> Asking Price:
+                <span class="float-right">${{ listing.price | intcomma }}</span>
+              </li>
+              <li class="list-group-item text-secondary">
+                <i class="fas fa-bed"></i> Bedrooms:
+                <span class="float-right">{{ listing.bedrooms }}</span>
+              </li>
+              <li class="list-group-item text-secondary">
+                <i class="fas fa-bath"></i> Bathrooms:
+                <span class="float-right">{{ listing.bathrooms }}</span>
+              </li>
+              <li class="list-group-item text-secondary">
+                <i class="fas fa-car"></i> Garage:
+                <span class="float-right">{{ listing.garage }}
+                </span>
+              </li>
+            </ul>
           </div>
+          <div class="col-md-6">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item text-secondary">
+                <i class="fas fa-th-large"></i> Square Feet:
+                <span class="float-right">{{ listing.sqft }}</span>
+              </li>
+              <li class="list-group-item text-secondary">
+                <i class="fas fa-square"></i> Lot Size:
+                <span class="float-right">{{ listing.lot_size }} Acres
+                </span>
+              </li>
+              <li class="list-group-item text-secondary">
+                <i class="fas fa-calendar"></i> Listing Date:
+                <span class="float-right">{{ listing.list_date }}</span>
+              </li>
+              <li class="list-group-item text-secondary">
+                <i class="fas fa-bed"></i> Realtor:
+                <span class="float-right">{{ listing.realtor }}
+                </span>
+              </li>
 
-          <!-- Description -->
-          <div class="row mb-5">
-            <div class="col-md-12" align="justify">
-              <h4><i class="far fa-file-alt"></i>	&nbsp;	&nbsp;Description</h4><br><h6>  {{ listing.description }}  </h6>
-            </div>
-          </div>
-          <div class="row mb-5">
-            <div class="col-md-12" align="justify">
-              <h4><i class="fas fa-map-marker-alt"></i>	&nbsp;	&nbsp;Location</h4><br><h6>  {{ listing.location }}  </h6>
-              <div id="mapid">
-                <script>
-                var mymap = L.map('mapid').setView([{{ listing.location_lat }}, {{ listing.location_lon }}], 12);
-                var marker = L.marker([{{ listing.location_lat }}, {{ listing.location_lon }}]).addTo(mymap);
-                L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=dVv9EcA0CgewnZmmRobm', {
-                  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                  maxZoom: 18,
-                  id: 'mapbox/streets-v11',
-                  tileSize: 512,
-                  zoomOffset: -1,
-                  accessToken: 'your.mapbox.access.token'
-                }).addTo(mymap);
-                var popup = L.popup();
 
-                function onMapClick(e) {
-                  popup
-                  .setLatLng(e.latlng)
-                  .setContent("You clicked the map at " + e.latlng.toString())
-                  .openOn(mymap);
-                }
-
-                mymap.on('click', onMapClick);
-                </script>
-
-              </div>
-            </div>
+            </ul>
           </div>
         </div>
-        <div class="col-md-3">
-          <div class="card mb-3">
-            <img class="card-img-top" src="{{ listing.realtor.photo.url }}" alt="">
-            <div class="card-body">
-              <h5 class="card-title">Property Realtor</h5>
-              <h6 class="text-secondary">{{ listing.realtor }}</h6>
-            </div>
-          </div>
 
-          <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Make An Inquiry</button>
-          <br>
-          <hr>
-          <form action="{% url 'like_listing' listing.pk %}" method="POST">
-            {%  csrf_token %}
-            <div class="row mb-5 fields">
-              <div class="col-md-6">
-                <button type="submit", name="listing_id", value="{{ listing.id }}" class="btn-primary  btn-sm">
-                  <i class="far fa-thumbs-up"></i> | {{ total_likes }}  Interested</button></div>
-
-                </div>
-              </from>
-
-            </div>
+        <!-- Description -->
+        <div class="row mb-5">
+          <div class="col-md-12" align="justify">
+            <h4><i class="far fa-file-alt"></i>	&nbsp;	&nbsp;Description</h4><br><h6>  {{ listing.description }}  </h6>
           </div>
         </div>
-      </section>
+        <div class="row mb-5">
+          <div class="col-md-12" align="justify">
+            <h4><i class="fas fa-map-marker-alt"></i>	&nbsp;	&nbsp;Location</h4><br><h6>  {{ listing.location }}  </h6>
+            <div id="mapid">
+              <script>
+              var mymap = L.map('mapid').setView([{{ listing.location_lat }}, {{ listing.location_lon }}], 12);
+              var marker = L.marker([{{ listing.location_lat }}, {{ listing.location_lon }}]).addTo(mymap);
+              L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=dVv9EcA0CgewnZmmRobm', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'your.mapbox.access.token'
+              }).addTo(mymap);
+              var popup = L.popup();
 
-      <!-- Inquiry Modal -->
-      <div class="modal fade" id="inquiryModal" role="dialog">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
-              <button type="button" class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="{% url 'contact' %}" method="POST">
-                {% csrf_token %}
-                {% if user.is_authenticated %}
-                <input type="hidden" name="user_id" value="{{ user.id }}">
-                {% else %}
-                <input type="hidden" name="user_id" value="0">
-                {% endif %}
-                <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
-                <input type="hidden" name="listing_id" value="{{ listing.id }}">
-                <div class="form-group">
-                  <label for="property_name" class="col-form-label">Property:</label>
-                  <input type="text" name="listing" class="form-control" value="{{ listing.title }}">
-                </div>
-                <div class="form-group">
-                  <label for="name" class="col-form-label">Name:</label>
-                  <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
-                </div>
-                <div class="form-group">
-                  <label for="email" class="col-form-label">Email:</label>
-                  <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
-                </div>
-                <div class="form-group">
-                  <label for="phone" class="col-form-label">Phone:</label>
-                  <input type="text" name="phone" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label for="message" class="col-form-label">Message:</label>
-                  <textarea name="message" class="form-control"></textarea>
-                </div>
-                <hr>
-                <input type="submit" value="Send" class="btn btn-block btn-secondary">
-              </form>
+              function onMapClick(e) {
+                popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(mymap);
+              }
+
+              mymap.on('click', onMapClick);
+              </script>
+
             </div>
           </div>
         </div>
       </div>
-      {% endblock %}
+      <div class="col-md-3">
+        <div class="card mb-3">
+          <img class="card-img-top" src="{{ listing.realtor.photo.url }}" alt="">
+          <div class="card-body">
+            <h5 class="card-title">Property Realtor</h5>
+            <h6 class="text-secondary">{{ listing.realtor }}</h6>
+          </div>
+        </div>
+
+        <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Make An Inquiry</button>
+        <br>
+        <hr>
+        <form action="{% url 'like_listing' listing.pk %}" method="POST">
+          {%  csrf_token %}
+          <div class="row mb-5 fields">
+            <div class="col-md-6">
+              <button type="submit", name="listing_id", value="{{ listing.id }}" class="btn-primary  btn-sm">
+                <i class="far fa-thumbs-up"></i> | {{ total_likes }}  Interested</button></div>
+
+              </div>
+            </from>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inquiry Modal -->
+    <div class="modal fade" id="inquiryModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{% url 'contact' %}" method="POST">
+              {% csrf_token %}
+              {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{ user.id }}">
+              {% else %}
+              <input type="hidden" name="user_id" value="0">
+              {% endif %}
+              <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
+              <input type="hidden" name="listing_id" value="{{ listing.id }}">
+              <div class="form-group">
+                <label for="property_name" class="col-form-label">Property:</label>
+                <input type="text" name="listing" class="form-control" value="{{ listing.title }}">
+              </div>
+              <div class="form-group">
+                <label for="name" class="col-form-label">Name:</label>
+                <input type="text" name="name" class="form-control" {% if user.is_authenticated %} value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+              </div>
+              <div class="form-group">
+                <label for="email" class="col-form-label">Email:</label>
+                <input type="email" name="email" class="form-control" {% if user.is_authenticated %} value="{{ user.email }}" {% endif %} required>
+              </div>
+              <div class="form-group">
+                <label for="phone" class="col-form-label">Phone:</label>
+                <input type="text" name="phone" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="message" class="col-form-label">Message:</label>
+                <textarea name="message" class="form-control"></textarea>
+              </div>
+              <hr>
+              <input type="submit" value="Send" class="btn btn-block btn-secondary">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}

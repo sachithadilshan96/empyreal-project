@@ -11,6 +11,7 @@ import folium
 from folium import plugins
 from folium.plugins import HeatMap
 from folium.plugins import MarkerCluster
+import json
 
 from django.views.generic import TemplateView
 
@@ -87,27 +88,92 @@ def listing(request, listing_id):
 
   listed_price = format(float(listing.price),'.2f')
 
-  data= pd.read_csv('kc_house_data.csv')
-  data["weight"] = .5
-  lat_lon = data[["lat","long"]].values[:2500]
-  map = folium.Map(location=[47.5480,-121.9836],zoom_start=12)
-  HeatMap(lat_lon,radius=10).add_to(map)
-  test = folium.Html('<b>Hello world</b>', script=True)
-  popup = folium.Popup(test, max_width=2650)
-  folium.Marker(location=[47.5480,-121.9836], popup=popup).add_to(map)
-  map=map._repr_html_()
 
-#https://opendata.arcgis.com/datasets/e6c555c6ae7542b2bdec92485892b6e6_113.geojson
+
+
 
   context = {
     'listing': listing,
     'total_likes' : total_likes,
     'predict_value':predict_value,
     'listed_price':listed_price,
-    'my_map': map
+
   }
 
   return render(request, 'listings/listing.html', context)
+
+
+def map(request, listing_id):
+
+    listing = get_object_or_404(Listing, pk=listing_id)
+
+    location_lat= float(listing.location_lat)
+    location_lon= float(listing.location_lon)
+    location= listing.location
+
+
+    data= pd.read_csv('kc_house_data.csv')
+    data["weight"] = .8
+    lat_lon = data[["lat","long"]].values[:15000]
+    map = folium.Map(location=[47.4081, -121.9949],zoom_start=8.5,)
+    HeatMap(lat_lon,radius=10).add_to(map)
+    test = folium.Html('<h1>Property Location</h1>', script=True)
+    popup = folium.Popup(test, max_width=2650)
+    folium.Marker(location=[location_lat,location_lon], popup=popup).add_to(map)
+    map=map._repr_html_()
+    context = {
+
+      'my_map': map,
+      'location': location
+    }
+
+    return render(request, 'listings/maps.html', context)
+
+
+
+def avmap(request, listing_id):
+
+    listing = get_object_or_404(Listing, pk=listing_id)
+
+    location_lat= float(listing.location_lat)
+    location_lon= float(listing.location_lon)
+    location= listing.location
+
+    data= pd.read_csv('kc_house_data.csv')
+    data_map = data.groupby('zipcode')[['price']].mean().reset_index()
+    data_map['zipcode'] = data_map['zipcode'].astype(str)
+    k_c='new.json'
+
+    map=folium.Map(
+    location=[47.4081, -121.9949],
+    zoom_start=8.5,
+    detect_retina=True,
+    control_scale=False,
+    )
+    folium.Choropleth(
+    geo_data=k_c,
+    name='choropleth',
+    data=data_map,
+    columns=['zipcode','price'],
+    key_on='feature.properties.ZIPCODE',
+    fill_color='Reds',
+    fill_opacity=0.9,
+    line_opacity=0.2,
+    legend_name='Average Price ($)').add_to(map)
+    folium.LayerControl().add_to(map)
+
+
+    test = folium.Html('<h1>Property Location</h1>', script=True)
+    popup = folium.Popup(test, max_width=2650)
+    folium.Marker(location=[location_lat,location_lon], popup=popup).add_to(map)
+    map=map._repr_html_()
+    context = {
+
+      'my_map': map,
+      'location': location
+    }
+
+    return render(request, 'listings/maps.html', context)
 
 def search(request):
   queryset_list = Listing.objects.order_by('-list_date')
