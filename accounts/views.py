@@ -11,6 +11,26 @@ from adz.forms import AdzForm
 from django.urls import reverse_lazy,reverse
 from datetime import datetime
 from services.models import Mortgage,Legal,Builder
+import numpy as np
+import pandas as pd
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import plotly.express as px
+from statsmodels.tsa.arima_model import ARIMA
+import warnings
+from pandas.tseries.offsets import DateOffset
+import joblib
+import matplotlib
+matplotlib.use('Agg')
+import urllib, base64
+import io
+from plotly.offline import plot
+from plotly.graph_objs import Scatter
+warnings.filterwarnings("ignore")
+
+pd.pandas.set_option('display.max_columns', None)
+pd.pandas.set_option('display.max_rows', None)
+
 
 
 def register(request):
@@ -197,3 +217,57 @@ def userprofile (request):
             new_UserProfileForm.user = request.user
             new_UserProfileForm.save()
         return render(request,'accounts/userprofile.html',{'form':UserProfileForm()})
+
+
+
+def marketpredict(request):
+    df=pd.read_csv('housing_in_london_monthly_variables.csv')
+    df.drop(['area', 'code','houses_sold','no_of_crimes','borough_flag'], axis=1, inplace=True)
+    df.columns=["Month","Avg"]
+    df.dropna(subset = ["Month"], inplace=True)
+    df['Month']=pd.to_datetime(df['Month'])
+    df.set_index('Month',inplace=True)
+
+
+    model = joblib.load('arima_model.sav')
+    results=model.fit()
+
+    future_dates=[df.index[-1]+ DateOffset(months=x)for x in range(0,25)]
+    future_datest_df=pd.DataFrame(index=future_dates[1:],columns=df.columns)
+
+    future_df=pd.concat([df,future_datest_df])
+    future_df['forecast'] =results.predict(start = 121, end = 146, dynamic= False)
+    # #future_df[['Avg', 'forecast']].plot(figsize=(12, 8))
+    # #plt.xlabel('area')
+    # plt.ylabel('price')
+    # plt.title("House Price area")
+    # #plt.show()
+    # fig = plt.gcf()
+    #
+    # buf = io.BytesIO()
+    # fig.savefig(buf,format='png')
+    # buf.seek(0)
+    # string = base64.b64encode(buf.read())
+    #
+    # uri = urllib.parse.quote(string)
+    fig = px.line(future_df, x=future_df.index, y=["Avg","forecast"])
+
+
+    fig.update_layout(
+        template='gridon',
+        title='Average Monthly London House Price Prediction',
+        xaxis_title='Year',
+        yaxis_title='Price (£)',
+        xaxis_showgrid=True,
+        yaxis_showgrid=True,
+    )
+    x_data = [0,1,2,3]
+    y_data = [x**2 for x in x_data]
+    plot_div = plot(px.line(future_df, x=future_df.index, y=["Avg","forecast"]),output_type='div')
+
+    context = {
+    'plot_div': plot_div
+
+    }
+
+    return render(request, 'accounts/marketpredict.html', context)

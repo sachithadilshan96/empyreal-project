@@ -12,4 +12,5 @@ urlpatterns = [
     path('dashboard', views.userlistings, name='userlistings'),
     path('userlistings/<int:listing_id>/delete', views.deletelistings,name='deletelistings'),
     path('editlisting/<int:listing_id>/', views.editlistings,name='editlisting'),
+    path('marketpredict', views.marketpredict, name='marketpredict'),
 ]

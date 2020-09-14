@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load crispy_forms_tags %}
+
+{% block title %} | Legal Services {% endblock %}
+
+
+{% block content %}
+<head>
+<style>
+.myDiv {
+
+  background-color:rgba(255,255,255,0.6);
+
+}
+
+</style>
+</head>
+<section id="showcase-inner" class="py-5 text-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <h1 class="display-4">Empyreal Predict</h1>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+
+<h1>xxxxx</h1>
+
+{% autoescape off %}
+  {{ plot_div }}
+  {% endautoescape %}
+
+</section>
+
+
+
+
+
+  {% endblock %}
