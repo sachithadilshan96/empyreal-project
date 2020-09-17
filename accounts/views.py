@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from contacts.models import Contact
 from listings.models import Listing
+#restricting  unauthorized access
 from django.contrib.auth.decorators import login_required
 from django.template.defaultfilters import yesno
 from.models import UserProfile

@@ -1,4 +1,6 @@
+#importing model froms
 from django.forms import ModelForm
+#Listing model import 
 from listings.models import Listing
 class AdzForm(ModelForm):
         class Meta:

@@ -1,5 +1,7 @@
 from django.db import models
+#importing django user default authenticaton
 from django.contrib.auth.models import User
+#extending to user profile
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User,primary_key=True,on_delete=models.CASCADE)

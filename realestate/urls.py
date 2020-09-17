@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+#connecting seperated apps urls into main path
 urlpatterns = [
     path('', include('pages.urls')),
     path('adz/', include('adz.urls')),

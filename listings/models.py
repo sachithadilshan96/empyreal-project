@@ -1,9 +1,13 @@
+#models importing
 from django.db import models
 from datetime import datetime
 from realtors.models import Realtor
 from django.contrib.auth.models import User
+
+#Using LongitudeField and LatitudeField
 from osm_field.fields import LatitudeField, LongitudeField, OSMField
 
+#User choices defining
 Waterfront_Choices= [
     (0, 'No'),
     (1, 'Yes'),
@@ -16,7 +20,7 @@ Condition_Choices= [tuple([x,x]) for x in range(1,6)]
 
 Grade_Choices= [tuple([x,x]) for x in range(1,14)]
 
-
+#Listing Model
 class Listing(models.Model):
   user = models.ForeignKey(User,on_delete=models.DO_NOTHING,default=2)
   realtor = models.ForeignKey(Realtor, on_delete=models.DO_NOTHING)
