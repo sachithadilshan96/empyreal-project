@@ -138,6 +138,7 @@ def avmap(request, listing_id):
     location_lat= float(listing.location_lat)
     location_lon= float(listing.location_lon)
     location= listing.location
+    address = listing.address
 
     data= pd.read_csv('kc_house_data.csv')
     data_map = data.groupby('zipcode')[['price']].mean().reset_index()
@@ -145,27 +146,40 @@ def avmap(request, listing_id):
     k_c='new.json'
 
     map=folium.Map(
-    location=[47.4081, -121.9949],
-    zoom_start=8.5,
+    location=[47.5577, -122.1277],
+    zoom_start=10.5,
     detect_retina=True,
     control_scale=False,
     )
-    folium.Choropleth(
+    choropleth=folium.Choropleth(
     geo_data=k_c,
     name='choropleth',
     data=data_map,
     columns=['zipcode','price'],
     key_on='feature.properties.ZIPCODE',
-    fill_color='Reds',
+    fill_color='Blues',
+    line_color='red',
     fill_opacity=0.9,
-    line_opacity=0.2,
+    line_opacity=0.5,
+    highlight=True,
     legend_name='Average Price ($)').add_to(map)
     folium.LayerControl().add_to(map)
+    choropleth.geojson.add_child(
+    folium.features.GeoJsonTooltip(['ZIPCODE'],labels=False)).add_to(map)
 
-
-    test = folium.Html('<h1>Property Location</h1>', script=True)
-    popup = folium.Popup(test, max_width=2650)
-    folium.Marker(location=[location_lat,location_lon], popup=popup).add_to(map)
+    city = folium.Html('<b>Seattle</b>',script=True)
+    pin = folium.Html('<h1>Property Location -</h1>'+location+address, script=True)
+    popup_1 = folium.Popup(pin, max_width=2650)
+    popup_2 = folium.Popup(city, max_width=2650)
+    folium.Marker(location=[location_lat,location_lon], popup=popup_1,
+    icon=folium.Icon(color='red', icon='info-sign')).add_to(map)
+    folium.CircleMarker(
+    location=[47.6062, -122.3321],
+    radius=10,
+    popup=popup_2,
+    color='#FF0000',
+    fill=True,
+    fill_color='#FF0000').add_to(map)
     map=map._repr_html_()
     context = {
 

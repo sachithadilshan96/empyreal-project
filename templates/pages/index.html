@@ -85,7 +85,7 @@
                 <img class="card-img-top" src="{{ listing.photo_main.url }}" alt="">
                 <div class="card-img-overlay">
                   <h2>
-                    <span class="badge badge-primary text-white">LKR {{ listing.price | intcomma }}</span>
+                    <span class="badge badge-primary text-white">$ {{ listing.price | intcomma }}</span>
                     {% if listing.is_verified == True %}
                     <span class="badge badge-info text-white">
                     <i class="fas fa-check-circle"></i>
