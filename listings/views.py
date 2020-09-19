@@ -110,6 +110,7 @@ def map(request, listing_id):
     location_lat= float(listing.location_lat)
     location_lon= float(listing.location_lon)
     location= listing.location
+    address=listing.address
 
 
     data= pd.read_csv('kc_house_data.csv')
@@ -117,9 +118,15 @@ def map(request, listing_id):
     lat_lon = data[["lat","long"]].values[:15000]
     map = folium.Map(location=[47.4081, -121.9949],zoom_start=8.5,)
     HeatMap(lat_lon,radius=10).add_to(map)
-    test = folium.Html('<h1>Property Location</h1>', script=True)
+    test = folium.Html('<h1>Property Location</h1>'+location+address, script=True)
     popup = folium.Popup(test, max_width=2650)
-    folium.Marker(location=[location_lat,location_lon], popup=popup).add_to(map)
+    folium.Marker(location=[location_lat,location_lon], popup=popup, icon=folium.Icon(color="red",icon="home", prefix='fa')).add_to(map)
+
+    marker_cluster = MarkerCluster().add_to(map)
+
+    for point in range(0, len(lat_lon)):
+        folium.Marker(lat_lon[point],popup=data['price'][point]).add_to(marker_cluster)
+
     map=map._repr_html_()
     context = {
 
@@ -171,8 +178,7 @@ def avmap(request, listing_id):
     pin = folium.Html('<h1>Property Location -</h1>'+location+address, script=True)
     popup_1 = folium.Popup(pin, max_width=2650)
     popup_2 = folium.Popup(city, max_width=2650)
-    folium.Marker(location=[location_lat,location_lon], popup=popup_1,
-    icon=folium.Icon(color='red', icon='info-sign')).add_to(map)
+    folium.Marker(location=[location_lat,location_lon], popup=popup_1,icon=folium.Icon(color="red",icon="home", prefix='fa')).add_to(map)
     folium.CircleMarker(
     location=[47.6062, -122.3321],
     radius=10,

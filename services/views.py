@@ -174,7 +174,9 @@ def predict(request):
      return render(request,"predict.html",{'form' : PredictForm()})
     else:
         form= PredictForm(request.POST or None)
+        #import model file
         model = joblib.load('empyreal.sav')
+        #validating user entered 18 features inputs
         if form.is_valid():
             title= form.cleaned_data.get("title")
             name= form.cleaned_data.get("name")
@@ -196,7 +198,7 @@ def predict(request):
             location_lon= form.cleaned_data.get("location_lon")
             sqft_living15= form.cleaned_data.get("sqft_living15")
             sqft_lot15= form.cleaned_data.get("sqft_lot15")
-
+            #adding validated user inputs to model
             ans =model.predict([[
                                     bedrooms,
                                     bathrooms,
@@ -218,6 +220,7 @@ def predict(request):
                                     sqft_lot15,
 
             ]])
+            #extracting predicted value
             predict_value = float(np.round(ans[0], 2))
             context = {
             'title':title,
