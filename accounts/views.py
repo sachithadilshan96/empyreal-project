@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from contacts.models import Contact
 from listings.models import Listing
+
 #restricting  unauthorized access
 from django.contrib.auth.decorators import login_required
 from django.template.defaultfilters import yesno
@@ -12,6 +13,7 @@ from adz.forms import AdzForm
 from django.urls import reverse_lazy,reverse
 from datetime import datetime
 from services.models import Mortgage,Legal,Builder
+#ML imports
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm

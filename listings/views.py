@@ -4,6 +4,7 @@ from .choices import price_choices, bedroom_choices, state_choices
 from django.urls import reverse_lazy,reverse
 from .models import Listing
 from django.http import HttpResponseRedirect
+#ML Imports
 import joblib
 import numpy as np
 import pandas as pd
@@ -18,13 +19,13 @@ from django.views.generic import TemplateView
 
 
 
-
+#like button
 def like(request,pk):
     listing = get_object_or_404(Listing, id=pk )
     listing.likes.add(request.user)
     return HttpResponseRedirect(reverse('listing', args=[str(pk)]))
 
-
+#listings home
 def index(request):
   listings = Listing.objects.order_by('-list_date').filter(is_published=True)
 
@@ -38,6 +39,7 @@ def index(request):
 
   return render(request, 'listings/listings.html', context)
 
+#single listing view
 def listing(request, listing_id):
   listing = get_object_or_404(Listing, pk=listing_id)
   likes = get_object_or_404(Listing, pk=listing_id)
@@ -103,6 +105,7 @@ def listing(request, listing_id):
   return render(request, 'listings/listing.html', context)
 
 
+#property heat map
 def map(request, listing_id):
 
     listing = get_object_or_404(Listing, pk=listing_id)
@@ -137,7 +140,7 @@ def map(request, listing_id):
     return render(request, 'listings/maps.html', context)
 
 
-
+#avg price map
 def avmap(request, listing_id):
 
     listing = get_object_or_404(Listing, pk=listing_id)
@@ -195,6 +198,7 @@ def avmap(request, listing_id):
 
     return render(request, 'listings/maps.html', context)
 
+#search bar
 def search(request):
   queryset_list = Listing.objects.order_by('-list_date')
 
