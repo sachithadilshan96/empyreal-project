@@ -194,10 +194,11 @@ def predict(request):
             yr_built= form.cleaned_data.get("yr_built")
             yr_renovated= form.cleaned_data.get("yr_renovated")
             zipcode= form.cleaned_data.get("zipcode")
-            location_lat= form.cleaned_data.get("location_lat")
-            location_lon= form.cleaned_data.get("location_lon")
             sqft_living15= form.cleaned_data.get("sqft_living15")
             sqft_lot15= form.cleaned_data.get("sqft_lot15")
+
+            location_lat = request.POST.get('lat', None)
+            location_lon = request.POST.get('lng', None)
             #adding validated user inputs to model
             ans =model.predict([[
                                     bedrooms,
@@ -248,6 +249,8 @@ def predict(request):
             #lgb_predict = modelL.predict([[3,1.00,1180,5650,1.0,0,0,3,7,1180,0,1955,0,98178,47.5112,-122.257,1340,5650]])
             #lgb_p = float(np.round(lgb_predict[0], 2))
 
+            print(location_lat)
+            print(location_lon)
             print(ans)
             return render(request,"result.html",context)
 
